@@ -1,15 +1,12 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Task {
-    private int idTask;
-    private String titleTask;
-    private String descriptionTask;
+    private  int idTask;
+    private final String titleTask;
+    private final String descriptionTask;
     private Status statusTask;
 
     public Task(String titleTask, String descriptionTask, Status statusTask) {
-        this.idTask = idTask;
         this.titleTask = titleTask;
         this.descriptionTask = descriptionTask;
         this.statusTask = statusTask;
@@ -27,17 +24,10 @@ public class Task {
         return titleTask;
     }
 
-    public void setTitleTask(String titleTask) {
-        this.titleTask = titleTask;
-    }
-
     public String getDescriptionTask() {
         return descriptionTask;
     }
 
-    public void setDescriptionTask(String descriptionTask) {
-        this.descriptionTask = descriptionTask;
-    }
 
     public Status getStatusTask() {
         return statusTask;
