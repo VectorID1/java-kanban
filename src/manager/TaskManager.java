@@ -1,3 +1,10 @@
+package manager;
+
+import model.Epic;
+import model.Status;
+import model.SubTask;
+import model.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,15 +47,15 @@ public class TaskManager {
 
     // Получение списка задач
     //___________________________________________
-    ArrayList<Task> getAllTask() {
+    public ArrayList<Task> getAllTask() {
         return new ArrayList<>(tasks.values());
     }
 
-    ArrayList<Epic> getAllEpics() {
+    public ArrayList<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
 
-    ArrayList<SubTask> getAllSubTask() {
+    public ArrayList<SubTask> getAllSubTask() {
         return new ArrayList<>(subTasks.values());
     }
 
@@ -157,7 +164,7 @@ public class TaskManager {
         subTasks.remove(id);
     }
 
-    //Получение списка всех подзадач Epic`a
+    //Получение списка всех подзадач model.Epic`a
     //___________________________________________________
     public ArrayList<SubTask> getAllSubTasksForEpic(int idEpic) {
         ArrayList<SubTask> subTasksForEpicId = new ArrayList<>();
@@ -168,7 +175,7 @@ public class TaskManager {
         return subTasksForEpicId;
     }
 
-    // Обновление статуса Epic`a
+    // Обновление статуса model.Epic`a
     //____________________________________________________
 
     public void updateStatusEpic(Epic epic) {
