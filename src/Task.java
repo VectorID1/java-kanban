@@ -2,11 +2,29 @@ import java.util.Objects;
 
 public class Task {
     private int idTask;
-    private final String titleTask;
-    private final String descriptionTask;
+    private String titleTask;
+    private String descriptionTask;
     private Status statusTask;
 
+    public Task(String titleTask, String descriptionTask) {
+        this.titleTask = titleTask;
+        this.descriptionTask = descriptionTask;
+    }
+
     public Task(String titleTask, String descriptionTask, Status statusTask) {
+        this.titleTask = titleTask;
+        this.descriptionTask = descriptionTask;
+        this.statusTask = statusTask;
+    }
+
+    public Task(int idTask, String titleTask, String descriptionTask) {
+        this.idTask = idTask;
+        this.titleTask = titleTask;
+        this.descriptionTask = descriptionTask;
+    }
+
+    public Task(int idTask, String titleTask, String descriptionTask, Status statusTask) {
+        this.idTask = idTask;
         this.titleTask = titleTask;
         this.descriptionTask = descriptionTask;
         this.statusTask = statusTask;
@@ -20,6 +38,10 @@ public class Task {
         this.idTask = idTask;
     }
 
+    public void setTitleTask(String titleTask) {
+        this.titleTask = titleTask;
+    }
+
     public String getTitleTask() {
         return titleTask;
     }
@@ -28,6 +50,9 @@ public class Task {
         return descriptionTask;
     }
 
+    public void setDescriptionTask(String descriptionTask) {
+        this.descriptionTask = descriptionTask;
+    }
 
     public Status getStatusTask() {
         return statusTask;
@@ -58,4 +83,6 @@ public class Task {
                 ", Статус выполнения = " + statusTask +
                 '}';
     }
+
+
 }
