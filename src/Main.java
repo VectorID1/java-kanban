@@ -49,7 +49,7 @@ public class Main {
         System.out.println(taskManager.getAllTask());
         System.out.println("\nВывод всех Эпиков");// Вывод всех задач задачи
         System.out.println(taskManager.getAllEpics());
-        System.out.println("\nВывод всех подзадачь\n");// Вывод всех эпиков эпики
+        System.out.println("\nВывод всех подзадач\n");// Вывод всех эпиков эпики
         System.out.println(taskManager.getAllSubTask()); //Вывод всех подзадач
         System.out.println("_______________________________________________");
         //Новая задача для обновления
