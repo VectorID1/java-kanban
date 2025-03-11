@@ -161,11 +161,12 @@ public class TaskManager {
     public void updateStatusEpic(Epic epic) {
         int countStatusNew = 0;
         int countStatusDone = 0;
+        if (epic.getIdSubTasks().isEmpty()) {
+            epic.setStatusTask(Status.NEW);
+            return;
+        }
         for (SubTask subTask : getAllSubTasksForEpic(epic.getIdTask())) {
-            if(epic.getIdSubTasks().isEmpty()){
-                epic.setStatusTask(Status.NEW);
-                return;
-            } else if (subTask.getStatusTask() == Status.IN_PROGRESS) {
+            if (subTask.getStatusTask() == Status.IN_PROGRESS) {
                 epic.setStatusTask(Status.IN_PROGRESS);
                 return;
             } else if (subTask.getStatusTask() == Status.NEW) {
