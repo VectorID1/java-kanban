@@ -1,3 +1,5 @@
+import manager.InMemoryHistoryManager;
+import manager.InMemoryTaskManager;
 import manager.TaskManager;
 import model.Epic;
 import model.Status;
@@ -7,7 +9,8 @@ import model.Task;
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         //1 Epic____________________________________
         Epic epic1 = new Epic("Переезд",
                 "Переехать в новый город");
@@ -93,7 +96,7 @@ public class Main {
         System.out.println(taskManager.getAllSubTask());
         System.out.println(taskManager.getAllEpics());
 
-        taskManager.removeEpicForId(1);
+        //taskManager.removeEpicForId(1);
 
         System.out.println("\nПосле удаления Эпика");
         System.out.println("__________________________________________________");
@@ -123,10 +126,19 @@ public class Main {
         System.out.println("\nУдаление эпика и вывод Эпиков и сабтасок");
         System.out.println("____________________________________________________");
 
-        taskManager.removeAllEpics();
+       // taskManager.removeAllEpics();
 
-        System.out.println(taskManager.getAllEpics());
-        System.out.println(taskManager.getAllSubTask());
+       // System.out.println(taskManager.getAllEpics());
+       // System.out.println(taskManager.getAllSubTask());
+
+        System.out.println(historyManager.getHistory());
+
+        taskManager.getSubTaskForId(3);
+
+        System.out.println(taskManager.getHistory());
+        System.out.println(historyManager.getHistory());
+
+
 
     }
 }
