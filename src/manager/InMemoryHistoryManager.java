@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final List<Task> historyOfViewedIssues = new ArrayList<>();
-
+    private final List<Task> taskHistory = new ArrayList<>();
+    private static final int MAX_HISTORY_SIZE = 10;
 
     @Override
     public List<Task> getHistory() {
-        return historyOfViewedIssues;
+        return new ArrayList<>(taskHistory);
     }
 
     @Override
     public void add(Task task) {
-        if (historyOfViewedIssues.size() == 10) {
-            historyOfViewedIssues.removeFirst();
+        if (taskHistory.size() == MAX_HISTORY_SIZE) {
+            taskHistory.removeFirst();
         }
-        historyOfViewedIssues.add(task);
+        taskHistory.add(task);
     }
 }
