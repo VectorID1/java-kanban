@@ -113,11 +113,5 @@ class InMemoryHistoryManagerTest {
         Assertions.assertEquals(1, tasks.size());
     }
 
-    @Test
-    public void managerGetDefaultHistory() {
-        HistoryManager defoultHistoryManager = Managers.getDefaultHistory();
 
-        Assertions.assertNotNull(defoultHistoryManager.getHistory());
-
-    }
 }

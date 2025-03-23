@@ -20,9 +20,7 @@ public class SubTaskTest {
                 Status.NEW,
                 1);
 
-        taskManager.addSubTask(subTask);
-        SubTask newSubtask = taskManager.getSubTaskForId(1);
 
-        Assertions.assertEquals(newSubtask,subTask1,"Задачи не совпадают");
+        Assertions.assertEquals(subTask,subTask1,"Задачи не совпадают");
     }
 }

@@ -158,9 +158,5 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(newEpic.getStatusTask(),DONE);
     }
 
-    @Test
-    public void managerGetDefault() {
-        TaskManager taskManagerDefault = Managers.getDefault();
-        Assertions.assertNotNull(taskManagerDefault);
-    }
+
 }

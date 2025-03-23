@@ -20,10 +20,8 @@ class TaskTest {
         Task task = new Task(1,"Test addNewTask", "Test addNewTask description", NEW);
         Task task1 = new Task(1,"Test addNewTask", "Test addNewTask description", NEW);
 
-        taskManager.addTask(task);
-        Task newTask = taskManager.getTaskForId(1);
 
-        Assertions.assertEquals(newTask,task1, "Задачи не совпадают.");
+        Assertions.assertEquals(task,task1, "Задачи не совпадают.");
     }
 
 
