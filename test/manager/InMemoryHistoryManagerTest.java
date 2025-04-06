@@ -56,7 +56,7 @@ class InMemoryHistoryManagerTest {
         taskManager.getTaskForId(5);
         taskManager.getTaskForId(6);
 
-        final List<Task> tasks = historyManager.getTasks();
+        List<Task> tasks = historyManager.getTasks();
 
         //Общий список
         Assertions.assertEquals(6, tasks.size());
