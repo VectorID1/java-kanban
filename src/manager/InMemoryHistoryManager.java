@@ -19,6 +19,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             oldNode.setNext(newNode);
             last = newNode;
             last.setPrev(oldNode);
+            last.setNext(null);
         }
 
         historyTask.put(task.getIdTask(), newNode);
