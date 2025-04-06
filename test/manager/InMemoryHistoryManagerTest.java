@@ -12,11 +12,13 @@ import java.util.List;
 import static model.Status.NEW;
 
 class InMemoryHistoryManagerTest {
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
-    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+    InMemoryTaskManager taskManager;
+    InMemoryHistoryManager historyManager;
 
     @BeforeEach
     public void beforeEach() {
+        taskManager = new InMemoryTaskManager();
+        historyManager = new InMemoryHistoryManager();
         Epic epic = new Epic(1, "Test addNewEpic",
                 "Test addNewEpic description");
         SubTask subTask = new SubTask(2, "Test addSubTask",
