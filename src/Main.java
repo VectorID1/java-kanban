@@ -1,4 +1,4 @@
-import manager.InMemoryHistoryManager;
+/*import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
 import manager.TaskManager;
 import model.Epic;
@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        //1 Epic____________________________________
+       *//* //1 Epic____________________________________
         Epic epic1 = new Epic("Переезд",
                 "Переехать в новый город");
         taskManager.addEpic(epic1);
@@ -121,7 +121,7 @@ public class Main {
         taskManager.updateEpic(newEpic);
 
         System.out.println(taskManager.getEpicForId(4));
-
+        System.out.println();
 
         System.out.println("\nУдаление эпика и вывод Эпиков и сабтасок");
         System.out.println("____________________________________________________");
@@ -135,10 +135,51 @@ public class Main {
 
         taskManager.getSubTaskForId(3);
 
-        System.out.println(taskManager.getHistory());
+      //  System.out.println(taskManager.getHistory());
+        historyManager.remove(4);
         System.out.println(historyManager.getHistory());
 
 
 
+    *//*
+        //1 Task______________________________________
+        Task task1 = new Task("Поздравить жену с 8 марта",
+                "Купить цветы",
+                Status.NEW);
+        taskManager.addTask(task1);
+        //2 Task_______________________________________
+        Task task2 = new Task("Сходить в магазин",
+                "Купить продукты и не забыть пиво! =)",
+                Status.NEW);
+        taskManager.addTask(task2);
+        //3 Task_______________________________________
+        Task task3 = new Task("Новая 3 задача",
+                "Купить пиво! =)",
+                Status.NEW);
+        taskManager.addTask(task3);
+        //4 Task_______________________________________
+        Task task4 = new Task("Новая 4 задача",
+                "Новое описание 4!",
+                Status.NEW);
+        taskManager.addTask(task4);
+        taskManager.getTaskForId(4);
+        taskManager.getTaskForId(4);
+
+        taskManager.getTaskForId(1);
+
+        taskManager.getTaskForId(4);
+        taskManager.getTaskForId(4);
+        taskManager.getTaskForId(3);
+        taskManager.getTaskForId(1);
+        taskManager.getTaskForId(1);
+
+        taskManager.getTaskForId(1);
+
+
+
+
+
+
+        System.out.println(historyManager.getTasks());
     }
-}
+}*/

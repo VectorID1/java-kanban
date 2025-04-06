@@ -4,7 +4,6 @@ import model.Epic;
 import model.SubTask;
 import model.Task;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,11 +11,73 @@ import java.util.List;
 import static model.Status.NEW;
 
 class InMemoryHistoryManagerTest {
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+    private InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
-    @BeforeEach
-    public void beforeEach() {
+    @Test
+    public void addTaskEndOfTheList() {
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+        Task task1 = new Task("Test addNewTask1",
+                "Test addNewTask1 description",
+                NEW);
+        Task task2 = new Task("Test addNewTask2",
+                "Test addNewTask2 description",
+                NEW);
+        Task task3 = new Task("Test addNewTask3",
+                "Test addNewTask3 description",
+                NEW);
+        Task task4 = new Task("Test addNewTask4",
+                "Test addNewTask4 description",
+                NEW);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+        taskManager.addTask(task4);
+        taskManager.getTaskForId(1);
+        taskManager.getTaskForId(2);
+        taskManager.getTaskForId(3);
+        taskManager.getTaskForId(4);
+        taskManager.getTaskForId(2);
+        List<Task> listTask = historyManager.getTasks();
+        Assertions.assertEquals(4, listTask.size());
+        Assertions.assertEquals(task2, listTask.get(3));
 
+    }
+
+    @Test
+    public void removeTask() {
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+        Task task1 = new Task("Test addNewTask1",
+                "Test addNewTask1 description",
+                NEW);
+        Task task2 = new Task("Test addNewTask2",
+                "Test addNewTask2 description",
+                NEW);
+        Task task3 = new Task("Test addNewTask3",
+                "Test addNewTask3 description",
+                NEW);
+        Task task4 = new Task("Test addNewTask4",
+                "Test addNewTask4 description",
+                NEW);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+        taskManager.addTask(task4);
+        taskManager.getTaskForId(1);
+        taskManager.getTaskForId(2);
+        taskManager.getTaskForId(3);
+        taskManager.getTaskForId(4);
+
+        List<Task> historyTask = historyManager.getTasks();
+        Assertions.assertEquals(4, historyTask.size());
+        historyManager.remove(3);
+        List<Task> newHistoryTask = historyManager.getTasks();
+        Assertions.assertEquals(3, newHistoryTask.size());
+
+    }
+
+    @Test
+    public void addOtherTask() {
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         Epic epic = new Epic("Test addNewEpic",
                 "Test addNewEpic description");
         SubTask subTask = new SubTask("Test addSubTask",
@@ -32,86 +93,96 @@ class InMemoryHistoryManagerTest {
         Task task2 = new Task("Test addNewTask2",
                 "Test addNewTask2 description",
                 NEW);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask);
+        taskManager.addTask(task);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.getEpicForId(1);
+        taskManager.getSubTaskForId(2);
+        taskManager.getTaskForId(3);
+        taskManager.getTaskForId(4);
+        taskManager.getTaskForId(5);
+
+        List<Task> historyList = historyManager.getTasks();
+        Assertions.assertEquals(5, historyList.size(), "Разное количесво задач");
+
+    }
+
+    @Test
+    public void managerGet6TasksSave4TaskInHistory() {
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+        Task task1 = new Task("Test addNewTask1",
+                "Test addNewTask1 description",
+                NEW);
+        Task task2 = new Task("Test addNewTask2",
+                "Test addNewTask2 description",
+                NEW);
         Task task3 = new Task("Test addNewTask3",
                 "Test addNewTask3 description",
                 NEW);
         Task task4 = new Task("Test addNewTask4",
                 "Test addNewTask4 description",
                 NEW);
-        Task task5 = new Task("Test addNewTask5",
-                "Test addNewTask description",
-                NEW);
-        Task task6 = new Task("Test addNewTask5",
-                "Test addNewTask description",
-                NEW);
-        Task task7 = new Task("Test addNewTask6",
-                "Test addNewTask6 description",
-                NEW);
-        Task task8 = new Task("Test addNewTask6",
-                "Test addNewTask6 description",
-                NEW);
-        taskManager.addEpic(epic);
-        taskManager.addSubTask(subTask);
-        taskManager.addTask(task);
         taskManager.addTask(task1);
         taskManager.addTask(task2);
         taskManager.addTask(task3);
         taskManager.addTask(task4);
-        taskManager.addTask(task5);
-        taskManager.addTask(task6);
-        taskManager.addTask(task7);
-        taskManager.addTask(task8);
-    }
-
-
-
-    @Test
-    public void managerGet11TasksSave10LastViewedTasksAndRemove1() {
+        taskManager.getTaskForId(1);
         taskManager.getTaskForId(2);
+        taskManager.getTaskForId(3);
         taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(7);
-        taskManager.getTaskForId(8);
-        taskManager.getTaskForId(9);
-        taskManager.getTaskForId(10);
-        taskManager.getTaskForId(11);
-        taskManager.getEpicForId(1);
-        taskManager.getSubTaskForId(3);
-        List<Task> tasks;
+        taskManager.getTaskForId(2);
+        taskManager.getTaskForId(1);
 
-        tasks = taskManager.getHistory();
+        List<Task> historyTask = historyManager.getTasks();
+        Assertions.assertEquals(4, historyTask.size(), "Количество задач не совпадает");
 
-        Assertions.assertEquals(10, tasks.size());
     }
 
     @Test
-    public void managerGet9TasksSave9Tasks() {
+    public void managerGet4TasksSave4Tasks() {
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+        // InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        Task task1 = new Task("Test addNewTask1",
+                "Test addNewTask1 description",
+                NEW);
+        Task task2 = new Task("Test addNewTask2",
+                "Test addNewTask2 description",
+                NEW);
+        Task task3 = new Task("Test addNewTask3",
+                "Test addNewTask3 description",
+                NEW);
+        Task task4 = new Task("Test addNewTask4",
+                "Test addNewTask4 description",
+                NEW);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+        taskManager.addTask(task4);
+        taskManager.getTaskForId(1);
         taskManager.getTaskForId(2);
+        taskManager.getTaskForId(3);
         taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(7);
-        taskManager.getTaskForId(8);
-        taskManager.getTaskForId(9);
-        taskManager.getTaskForId(10);
-        taskManager.getTaskForId(11);
+
         List<Task> tasks;
 
-        tasks = taskManager.getHistory();
+        tasks = historyManager.getTasks();
 
-        Assertions.assertEquals(9, tasks.size());
+        Assertions.assertEquals(4, tasks.size());
     }
 
     @Test
     public void managerGet1TaskSave1Task() {
-        taskManager.getTaskForId(2);
-        List<Task> tasks;
+        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
-        tasks = taskManager.getHistory();
+        Task task = new Task(1, "Название задачи 1", "Описание задачи 1", NEW);
+        taskManager.addTask(task);
+        taskManager.getTaskForId(1);
+
+        List<Task> tasks = historyManager.getTasks();
 
         Assertions.assertEquals(1, tasks.size());
     }
-
 
 }

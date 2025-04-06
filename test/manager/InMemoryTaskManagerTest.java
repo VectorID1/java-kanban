@@ -1,5 +1,4 @@
 package manager;
-
 import model.Epic;
 import model.Status;
 import model.SubTask;
@@ -19,8 +18,9 @@ class InMemoryTaskManagerTest {
 
     @BeforeEach
     public void beforeEach() {
-         taskManager = new InMemoryTaskManager();
+        taskManager = new InMemoryTaskManager();
     }
+
     @Test
     public void addNewTask() {
         Epic epic = new Epic(
@@ -47,45 +47,46 @@ class InMemoryTaskManagerTest {
         final Task savedTask = taskManager.getTaskForId(2);
         final SubTask savedTaskSubTask = taskManager.getSubTaskForId(3);
 
-        Assertions.assertNotNull(savedTask,"Epic не найдена.");
+        Assertions.assertNotNull(savedTask, "Epic не найдена.");
         Assertions.assertNotNull(savedTask, "Задача не найдена.");
-        Assertions.assertNotNull(savedTaskSubTask,"Подзадача не найдена.");
+        Assertions.assertNotNull(savedTaskSubTask, "Подзадача не найдена.");
 
-        Assertions.assertEquals(savedEpic.getTitleTask(),"Test addNewEpic","Название Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getTitleTask(),"Test addNewTask","Название задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getTitleTask(),"Test subTaskName",
+        Assertions.assertEquals(savedEpic.getTitleTask(), "Test addNewEpic", "Название Epic не совпадает.");
+        Assertions.assertEquals(savedTask.getTitleTask(), "Test addNewTask", "Название задачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getTitleTask(), "Test subTaskName",
                 "Название подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getDescriptionTask(),"Test addNewEpic description",
+        Assertions.assertEquals(savedEpic.getDescriptionTask(), "Test addNewEpic description",
                 "Описание Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getDescriptionTask(),"Test addNewTask description",
+        Assertions.assertEquals(savedTask.getDescriptionTask(), "Test addNewTask description",
                 "Описание задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(),"Test SubTask description",
+        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(), "Test SubTask description",
                 "Описание подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getIdTask(),1,"id Epic не совпадает");
-        Assertions.assertEquals(savedTask.getIdTask(),2,"id Task не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getIdTask(),3,"id SubTask не совпадает");
+        Assertions.assertEquals(savedEpic.getIdTask(), 1, "id Epic не совпадает");
+        Assertions.assertEquals(savedTask.getIdTask(), 2, "id Task не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getIdTask(), 3, "id SubTask не совпадает");
 
-        Assertions.assertEquals(savedEpic.getStatusTask(),DONE,"Статус Epic  не совпадает");
-        Assertions.assertEquals(savedTask.getStatusTask(),NEW,"Статус Task  не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getStatusTask(),DONE,"Статус SubTask  не совпадает");
+        Assertions.assertEquals(savedEpic.getStatusTask(), DONE, "Статус Epic  не совпадает");
+        Assertions.assertEquals(savedTask.getStatusTask(), NEW, "Статус Task  не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getStatusTask(), DONE, "Статус SubTask  не совпадает");
 
     }
+
     @Test
     void listTaskTest() {
-        Task task = new Task(1,"Test addNewTask", "Test addNewTask description", NEW);
-        Task task1 = new Task(2,"Test addNewTask1", "Test addNewTask1 description", NEW);
+        Task task = new Task(1, "Test addNewTask", "Test addNewTask description", NEW);
+        Task task1 = new Task(2, "Test addNewTask1", "Test addNewTask1 description", NEW);
         taskManager.addTask(task);
         taskManager.addTask(task1);
         final List<Task> tasks = taskManager.getAllTask();
 
-        Assertions.assertNotNull(tasks,"Задачи не возвращаются.");
+        Assertions.assertNotNull(tasks, "Задачи не возвращаются.");
         Assertions.assertEquals(2, tasks.size(), "Неверное количество задач.");
     }
 
     @Test
-    public void getSubTaskForEpic(){
+    public void getSubTaskForEpic() {
         Epic epic = new Epic(
                 "Test addEpic",
                 "Test addEpic descriprion"
@@ -100,7 +101,7 @@ class InMemoryTaskManagerTest {
 
         ArrayList<SubTask> newSubTasks = new ArrayList<>();
         newSubTasks.add(subTask);
-        Assertions.assertEquals(newSubTasks,taskManager.getAllSubTasksForEpic(1),"Подзадача не равна!");
+        Assertions.assertEquals(newSubTasks, taskManager.getAllSubTasksForEpic(1), "Подзадача не равна!");
     }
 
     @Test
@@ -130,7 +131,7 @@ class InMemoryTaskManagerTest {
                 NEW
         );
         taskManager.addTask(task);
-        Assertions.assertEquals(taskManager.getTaskForId(1),task,"id Task не совпадает в тесте PreId");
+        Assertions.assertEquals(taskManager.getTaskForId(1), task, "id Task не совпадает в тесте PreId");
     }
 
     @Test
@@ -150,13 +151,11 @@ class InMemoryTaskManagerTest {
         Epic newEpic = taskManager.getEpicForId(1);
         SubTask newSubTask = taskManager.getSubTaskForId(2);
 
-        Assertions.assertEquals(newEpic.getStatusTask(),NEW);
+        Assertions.assertEquals(newEpic.getStatusTask(), NEW);
 
         newSubTask.setStatusTask(DONE);
         taskManager.addSubTask(newSubTask);
 
-        Assertions.assertEquals(newEpic.getStatusTask(),DONE);
+        Assertions.assertEquals(newEpic.getStatusTask(), DONE);
     }
-
-
 }

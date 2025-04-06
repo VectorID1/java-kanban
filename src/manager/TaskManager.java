@@ -63,7 +63,7 @@ public interface TaskManager {
 
     //Отображение последних 10 просмотренных задач
     //___________________________________________________
-     List<Task> getHistory();
+    // List<Task> getHistory();
 
 
 
