@@ -108,8 +108,8 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public SubTask getSubTaskForId(int id) {
-            historyManager.add(subTasks.get(id));
-            return subTasks.get(id);
+        historyManager.add(subTasks.get(id));
+        return subTasks.get(id);
     }
 
     //Обновление задачи
@@ -212,11 +212,11 @@ public class InMemoryTaskManager implements TaskManager {
             epic.setStatusTask(Status.IN_PROGRESS);
         }
     }
+
     // Отображение последних 10 просмотренных задач
     //__________________________________________________
-   public List<Task> getHisory(){
+    public List<Task> getHisory() {
         return historyManager.getTasks();
     }
-
 
 }
