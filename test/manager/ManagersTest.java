@@ -14,9 +14,7 @@ public class ManagersTest {
     @Test
     public void managerGetDefaultHistory() {
         HistoryManager defoultHistoryManager = Managers.getDefaultHistory();
-
         Assertions.assertNotNull(defoultHistoryManager.getTasks());
-
     }
 
 }
