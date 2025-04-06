@@ -7,17 +7,18 @@ import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, SubTask> subTasks = new HashMap<>();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager;
     private int idNumber = 1;
 
-   /* public InMemoryTaskManager() {
+    public InMemoryTaskManager() {
         this.historyManager = Managers.getDefaultHistory();
-    }*/
+    }
 
     //Генератор идонтефикатора
     private int generateId() {
@@ -210,6 +211,11 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             epic.setStatusTask(Status.IN_PROGRESS);
         }
+    }
+    // Отображение последних 10 просмотренных задач
+    //__________________________________________________
+   public List<Task> getHisory(){
+        return historyManager.getTasks();
     }
 
 

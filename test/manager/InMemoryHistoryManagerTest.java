@@ -12,79 +12,86 @@ import java.util.List;
 import static model.Status.NEW;
 
 class InMemoryHistoryManagerTest {
-    InMemoryTaskManager taskManager;
     InMemoryHistoryManager historyManager;
+    Epic epic;
+    SubTask subTask;
+    Task task1;
+    Task task2;
+    Task task3;
+    Task task4;
 
     @BeforeEach
     public void beforeEach() {
-        taskManager = new InMemoryTaskManager();
         historyManager = new InMemoryHistoryManager();
-        Epic epic = new Epic(1, "Test addNewEpic",
+        epic = new Epic(1, "Test addNewEpic",
                 "Test addNewEpic description");
-        SubTask subTask = new SubTask(2, "Test addSubTask",
+        subTask = new SubTask(2, "Test addSubTask",
                 "Test addSubTask description",
                 NEW,
                 1);
-        Task task1 = new Task(3, "Test addNewTask1",
+        task1 = new Task(3, "Test addNewTask1",
                 "Test addNewTask1 description",
                 NEW);
-        Task task2 = new Task(4, "Test addNewTask2",
+        task2 = new Task(4, "Test addNewTask2",
                 "Test addNewTask2 description",
                 NEW);
-        Task task3 = new Task(5,
+        task3 = new Task(5,
                 "Test addNewTask3",
                 "Test addNewTask3 description",
                 NEW);
-        Task task4 = new Task(6,
+        task4 = new Task(6,
                 "Test addNewTask4",
                 "Test addNewTask4 description",
                 NEW);
-        taskManager.addEpic(epic);
-        taskManager.addSubTask(subTask);
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-        taskManager.addTask(task4);
+
     }
 
     @Test
-    public void managerTest() {
-        taskManager.getEpicForId(1);
-        taskManager.getSubTaskForId(2);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
+    public void add3Task() {
+        historyManager.add(epic);
+        historyManager.add(subTask);
+        historyManager.add(task1);
 
         List<Task> tasks = historyManager.getTasks();
 
-        //Общий список
-        Assertions.assertEquals(tasks.size(),6);
-
-        //Удаление задачи
-        historyManager.remove(2);
-        List<Task> tasksAfterRemove = historyManager.getTasks();
-        Assertions.assertEquals(tasksAfterRemove.size(),5);
-
-        //Добавление в конец списка
-        taskManager.getTaskForId(3);
-        List<Task> lastTaskAfther = historyManager.getTasks();
-        Assertions.assertEquals(lastTaskAfther.getLast(), taskManager.getTaskForId(3));
-
-        //Проверка на удаление повторок
-        taskManager.getEpicForId(1);
-        taskManager.getSubTaskForId(2);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(4);
-        List<Task> newList = historyManager.getTasks();
-
-        Assertions.assertEquals(newList.size(),6);
+        Assertions.assertEquals(3, tasks.size(), "Задачи не добавляются в список");
     }
 
+    @Test
+    public void removeTask() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(3, tasks.size());
+
+        historyManager.remove(3);
+        List<Task> tasksAfterRemove = historyManager.getTasks();
+        Assertions.assertEquals(2, tasksAfterRemove.size(), "Задача не удалилась");
+    }
+
+    @Test
+    public void addTaskLinkLast() {
+        historyManager.add(epic);
+        historyManager.add(task1);
+        historyManager.add(task4);
+
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(task4, tasks.get(2));
+
+        historyManager.add(epic);
+        List<Task> tasksAfterAddEpic = historyManager.getTasks();
+        Assertions.assertEquals(epic, tasksAfterAddEpic.get(2), "Задача добавилась не в конец списка");
+    }
+
+    @Test
+    public void addIdenticalTasks() {
+        historyManager.add(task1);
+        historyManager.add(task1);
+        historyManager.add(task1);
+
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(1, tasks.size(), "Задачи не перезаписываются");
+    }
 }

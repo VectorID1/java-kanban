@@ -1,6 +1,4 @@
-/*import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.TaskManager;
+/*import manager.*;
 import model.Epic;
 import model.Status;
 import model.SubTask;
@@ -10,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+       // HistoryManager historyManager = Managers.getDefaultHistory();
 //        //1 Epic____________________________________
 //        Epic epic1 = new Epic("Переезд",
 //                "Переехать в новый город");
@@ -174,7 +172,7 @@ public class Main {
         taskManager.getTaskForId(1);
 
 
-        System.out.println(historyManager.getTasks());
+        System.out.println(taskManager.getHisory());
     }
 }*/
 

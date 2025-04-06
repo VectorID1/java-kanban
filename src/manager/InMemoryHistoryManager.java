@@ -5,9 +5,9 @@ import model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static final HashMap<Integer, Node<Task>> historyTask = new HashMap<>();
-    private static Node<Task> first;
-    private static Node<Task> last;
+    private  HashMap<Integer, Node<Task>> historyTask = new HashMap<>();
+    private  Node<Task> first = null;
+    private  Node<Task> last = null;
 
     public void linkLast(Task task) {
         Node<Task> newNode = new Node<>(last, task, null);
@@ -59,11 +59,11 @@ public class InMemoryHistoryManager implements HistoryManager {
             } else if (removeNode.getNext() == null && removeNode.getPrev() != null) {
                 Node<Task> prevNode = removeNode.getPrev();
                 prevNode.setNext(null);
-                last = removeNode.getPrev();
+                last = prevNode;
             } else if (removeNode.getPrev() == null && removeNode.getNext() != null) {
                 Node<Task> firstNode = removeNode.getNext();
                 firstNode.setPrev(null);
-                first = removeNode.getNext();
+                first = firstNode;
             } else
                 last = null;
         }
