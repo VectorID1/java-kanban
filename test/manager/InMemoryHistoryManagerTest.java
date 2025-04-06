@@ -49,7 +49,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void managerGet1TaskSave1Task() {
-        taskManager.getTaskForId(3);
+        taskManager.getEpicForId(1);
 
         final List<Task> tasks = historyManager.getTasks();
 
@@ -58,25 +58,25 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void addTaskEndOfTheList() {
+        taskManager.getEpicForId(1);
         taskManager.getTaskForId(3);
         taskManager.getTaskForId(4);
         taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(4);
+        taskManager.getEpicForId(1);
 
         final List<Task> listTask = historyManager.getTasks();
 
         Assertions.assertEquals(4, listTask.size());
-        Assertions.assertEquals(taskManager.getTaskForId(4), listTask.get(3));
+        Assertions.assertEquals(taskManager.getEpicForId(1), listTask.get(3));
 
     }
 
     @Test
     public void removeTask() {
+        taskManager.getEpicForId(1);
         taskManager.getTaskForId(3);
         taskManager.getTaskForId(4);
         taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
 
         final List<Task> historyTask = historyManager.getTasks();
         Assertions.assertEquals(4, historyTask.size());
@@ -88,30 +88,30 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void managerGet6TasksSave4TaskInHistory() {
+        taskManager.getEpicForId(1);
         taskManager.getTaskForId(3);
         taskManager.getTaskForId(4);
         taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
         taskManager.getTaskForId(3); //Повторный просмотр.
-        taskManager.getTaskForId(6); //Повторный просмотр.
+        taskManager.getTaskForId(5); //Повторный просмотр.
 
         final List<Task> historyTask = historyManager.getTasks();
         Assertions.assertEquals(4, historyTask.size(), "Количество задач не совпадает");
 
     }
 
-    @Test
-    public void managerGet4TasksSave4Tasks() {
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-
-        final List<Task> tasks1 = historyManager.getTasks();
-
-
-        Assertions.assertEquals(4, tasks1.size());
-    }
+//    @Test
+//    public void managerGet4TasksSave4Tasks() {
+//        taskManager.getTaskForId(3);
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(5);
+//        taskManager.getTaskForId(6);
+//
+//        final List<Task> tasks1 = historyManager.getTasks();
+//
+//
+//        Assertions.assertEquals(4, tasks1.size());
+//    }
 //    @Test
 //    public void addOtherTask() {
 //        taskManager.getEpicForId(1);
