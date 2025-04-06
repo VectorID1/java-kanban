@@ -15,7 +15,6 @@ import static model.Status.NEW;
 
 class InMemoryTaskManagerTest {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
-
     @BeforeEach
     public void beforeEach() {
         taskManager = new InMemoryTaskManager();
@@ -47,7 +46,7 @@ class InMemoryTaskManagerTest {
         final Task savedTask = taskManager.getTaskForId(2);
         final SubTask savedTaskSubTask = taskManager.getSubTaskForId(3);
 
-        Assertions.assertNotNull(savedTask, "Epic не найдена.");
+        Assertions.assertNotNull(savedEpic, "Epic не найдена.");
         Assertions.assertNotNull(savedTask, "Задача не найдена.");
         Assertions.assertNotNull(savedTaskSubTask, "Подзадача не найдена.");
 

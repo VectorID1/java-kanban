@@ -43,7 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void addSubTask(SubTask subTask) {
         Epic epic = epics.get(subTask.getEpicId());
         if (epic == null) {
-            return;
+            subTask = null;
         } else {
             subTask.setIdTask(generateId());
             subTasks.put(subTask.getIdTask(), subTask);
@@ -107,8 +107,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public SubTask getSubTaskForId(int id) {
-        historyManager.add(subTasks.get(id));
-        return subTasks.get(id);
+        if(subTasks.containsKey(id)) {
+            historyManager.add(subTasks.get(id));
+            return subTasks.get(id);
+        } else
+            return null;
     }
 
     //Обновление задачи
