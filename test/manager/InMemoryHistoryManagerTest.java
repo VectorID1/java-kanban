@@ -59,12 +59,12 @@ class InMemoryHistoryManagerTest {
         List<Task> tasks = historyManager.getTasks();
 
         //Общий список
-        Assertions.assertEquals(6, tasks.size());
+        Assertions.assertEquals(tasks.size(),6);
 
         //Удаление задачи
         historyManager.remove(2);
         List<Task> tasksAfterRemove = historyManager.getTasks();
-        Assertions.assertEquals(5, tasksAfterRemove.size());
+        Assertions.assertEquals(tasksAfterRemove.size(),5);
 
         //Добавление в конец списка
         taskManager.getTaskForId(3);
@@ -83,7 +83,7 @@ class InMemoryHistoryManagerTest {
         taskManager.getTaskForId(4);
         List<Task> newList = historyManager.getTasks();
 
-        Assertions.assertEquals(6, newList.size());
+        Assertions.assertEquals(newList.size(),6);
     }
 
 
