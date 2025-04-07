@@ -61,9 +61,10 @@ public class InMemoryHistoryManager implements HistoryManager {
                 Node<Task> firstNode = removeNode.getNext();
                 firstNode.setPrev(null);
                 first = firstNode;
-            } else
+            } else {
                 last = null;
-               // first = null;  Если раскоментить метод не удаляет...
+                first = null;
+            }
         historyTask.remove(task.getIdTask());
     }
 
