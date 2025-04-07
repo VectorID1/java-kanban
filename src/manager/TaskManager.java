@@ -5,7 +5,6 @@ import model.SubTask;
 import model.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface TaskManager {
 
@@ -63,7 +62,7 @@ public interface TaskManager {
 
     //Отображение последних 10 просмотренных задач
     //___________________________________________________
-     List<Task> getHistory();
+    // List<Task> getHistory();
 
 
 

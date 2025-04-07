@@ -12,18 +12,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 class TaskTest {
-     InMemoryTaskManager taskManager = new InMemoryTaskManager();
+    InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
 
     @Test
-            void equalsTask() {
-        Task task = new Task(1,"Test addNewTask", "Test addNewTask description", NEW);
-        Task task1 = new Task(1,"Test addNewTask", "Test addNewTask description", NEW);
+    void equalsTask() {
+        Task task = new Task(1,
+                "Test addNewTask",
+                "Test addNewTask description",
+                NEW);
+        Task task1 = new Task(1,
+                "Test addNewTask",
+                "Test addNewTask description",
+                NEW);
 
 
-        Assertions.assertEquals(task,task1, "Задачи не совпадают.");
+        Assertions.assertEquals(task, task1, "Задачи не совпадают.");
     }
-
 
 
 }

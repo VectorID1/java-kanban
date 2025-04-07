@@ -12,106 +12,86 @@ import java.util.List;
 import static model.Status.NEW;
 
 class InMemoryHistoryManagerTest {
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+    InMemoryHistoryManager historyManager;
+    Epic epic;
+    SubTask subTask;
+    Task task1;
+    Task task2;
+    Task task3;
+    Task task4;
 
     @BeforeEach
     public void beforeEach() {
-
-        Epic epic = new Epic("Test addNewEpic",
+        historyManager = new InMemoryHistoryManager();
+        epic = new Epic(1, "Test addNewEpic",
                 "Test addNewEpic description");
-        SubTask subTask = new SubTask("Test addSubTask",
+        subTask = new SubTask(2, "Test addSubTask",
                 "Test addSubTask description",
                 NEW,
                 1);
-        Task task = new Task("Test addNewTask",
-                "Test addNewTask description",
-                NEW);
-        Task task1 = new Task("Test addNewTask1",
+        task1 = new Task(3, "Test addNewTask1",
                 "Test addNewTask1 description",
                 NEW);
-        Task task2 = new Task("Test addNewTask2",
+        task2 = new Task(4, "Test addNewTask2",
                 "Test addNewTask2 description",
                 NEW);
-        Task task3 = new Task("Test addNewTask3",
+        task3 = new Task(5,
+                "Test addNewTask3",
                 "Test addNewTask3 description",
                 NEW);
-        Task task4 = new Task("Test addNewTask4",
+        task4 = new Task(6,
+                "Test addNewTask4",
                 "Test addNewTask4 description",
                 NEW);
-        Task task5 = new Task("Test addNewTask5",
-                "Test addNewTask description",
-                NEW);
-        Task task6 = new Task("Test addNewTask5",
-                "Test addNewTask description",
-                NEW);
-        Task task7 = new Task("Test addNewTask6",
-                "Test addNewTask6 description",
-                NEW);
-        Task task8 = new Task("Test addNewTask6",
-                "Test addNewTask6 description",
-                NEW);
-        taskManager.addEpic(epic);
-        taskManager.addSubTask(subTask);
-        taskManager.addTask(task);
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-        taskManager.addTask(task4);
-        taskManager.addTask(task5);
-        taskManager.addTask(task6);
-        taskManager.addTask(task7);
-        taskManager.addTask(task8);
-    }
 
-
-
-    @Test
-    public void managerGet11TasksSave10LastViewedTasksAndRemove1() {
-        taskManager.getTaskForId(2);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(7);
-        taskManager.getTaskForId(8);
-        taskManager.getTaskForId(9);
-        taskManager.getTaskForId(10);
-        taskManager.getTaskForId(11);
-        taskManager.getEpicForId(1);
-        taskManager.getSubTaskForId(3);
-        List<Task> tasks;
-
-        tasks = taskManager.getHistory();
-
-        Assertions.assertEquals(10, tasks.size());
     }
 
     @Test
-    public void managerGet9TasksSave9Tasks() {
-        taskManager.getTaskForId(2);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(5);
-        taskManager.getTaskForId(6);
-        taskManager.getTaskForId(7);
-        taskManager.getTaskForId(8);
-        taskManager.getTaskForId(9);
-        taskManager.getTaskForId(10);
-        taskManager.getTaskForId(11);
-        List<Task> tasks;
+    public void add3Task() {
+        historyManager.add(epic);
+        historyManager.add(subTask);
+        historyManager.add(task1);
 
-        tasks = taskManager.getHistory();
+        List<Task> tasks = historyManager.getTasks();
 
-        Assertions.assertEquals(9, tasks.size());
+        Assertions.assertEquals(3, tasks.size(), "Задачи не добавляются в список");
     }
 
     @Test
-    public void managerGet1TaskSave1Task() {
-        taskManager.getTaskForId(2);
-        List<Task> tasks;
+    public void removeTask() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
-        tasks = taskManager.getHistory();
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(3, tasks.size());
 
-        Assertions.assertEquals(1, tasks.size());
+        historyManager.remove(3);
+        List<Task> tasksAfterRemove = historyManager.getTasks();
+        Assertions.assertEquals(2, tasksAfterRemove.size(), "Задача не удалилась");
     }
 
+    @Test
+    public void addTaskLinkLast() {
+        historyManager.add(epic);
+        historyManager.add(task1);
+        historyManager.add(task4);
 
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(task4, tasks.get(2));
+
+        historyManager.add(epic);
+        List<Task> tasksAfterAddEpic = historyManager.getTasks();
+        Assertions.assertEquals(epic, tasksAfterAddEpic.get(2), "Задача добавилась не в конец списка");
+    }
+
+    @Test
+    public void addIdenticalTasks() {
+        historyManager.add(task1);
+        historyManager.add(task1);
+        historyManager.add(task1);
+
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(1, tasks.size(), "Задачи не перезаписываются");
+    }
 }
