@@ -15,6 +15,7 @@ import static model.Status.NEW;
 
 class InMemoryTaskManagerTest {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
+
     @BeforeEach
     public void beforeEach() {
         taskManager = new InMemoryTaskManager();
@@ -103,23 +104,23 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(newSubTasks, taskManager.getAllSubTasksForEpic(1), "Подзадача не равна!");
     }
 
-//    @Test                                             //Этот тест пришлось закрыть, потому что ГитХаб ругался на мои
-//    public void addSubTaskEpicNonExistentId() {        //Лишние условия if при добавлении сабтаски в список.
-//        Epic epic = new Epic(                          // Этот тест крашится потому что под 2 индексом нет сабтаски.
-//                1,
-//                "Test addNewEpic",
-//                "Test addNewEpic description");
-//        SubTask subTask = new SubTask(
-//                2,
-//                "Test subTaskName",
-//                "Test SubTask description",
-//                Status.DONE,
-//                2);
-//        taskManager.addEpic(epic);
-//        taskManager.addSubTask(subTask);
-//        Assertions.assertNull(taskManager.getSubTaskForId(2));
-//
-//    }
+    @Test
+    public void addSubTaskEpicNonExistentId() {
+        Epic epic = new Epic(
+                1,
+                "Test addNewEpic",
+                "Test addNewEpic description");
+        SubTask subTask = new SubTask(
+                2,
+                "Test subTaskName",
+                "Test SubTask description",
+                Status.DONE,
+                2);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask);
+        Assertions.assertNull(taskManager.getSubTaskForId(2));
+
+    }
 
     @Test
     public void addTaskPreIdFrom99To1() {
@@ -156,5 +157,36 @@ class InMemoryTaskManagerTest {
         taskManager.addSubTask(newSubTask);
 
         Assertions.assertEquals(newEpic.getStatusTask(), DONE);
+    }
+
+    @Test
+    public void removeEpic() {
+        Epic epic = new Epic(
+                1,
+                "Test addNewEpic",
+                "Test addNewEpic description");
+        SubTask subTask = new SubTask(
+                2,
+                "Test subTaskName",
+                "Test SubTask description",
+                NEW,
+                1);
+        SubTask subTask1 = new SubTask(
+                3,
+                "Test subTaskName",
+                "Test SubTask description",
+                NEW,
+                1);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask);
+        taskManager.addSubTask(subTask1);
+
+        Assertions.assertNotNull(taskManager.getSubTaskForId(2));
+
+        taskManager.removeEpicForId(1);
+
+        Assertions.assertNull(taskManager.getEpicForId(1));
+        Assertions.assertNull(taskManager.getSubTaskForId(2));
+        Assertions.assertNull(taskManager.getSubTaskForId(3));
     }
 }

@@ -74,7 +74,7 @@ public class InMemoryTaskManager implements TaskManager {
     //_____________________________________________
     @Override
     public void removeAllTasks() {
-        for(int id : tasks.keySet()) {
+        for (int id : tasks.keySet()) {
             historyManager.remove(id);
         }
         tasks.clear();
@@ -82,11 +82,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllEpics() {
-        for(int id : subTasks.keySet()) {
+        for (int id : subTasks.keySet()) {
             historyManager.remove(id);
         }
         subTasks.clear();
-        for(int id : epics.keySet()) {
+        for (int id : epics.keySet()) {
             historyManager.remove(id);
         }
         epics.clear();
@@ -94,7 +94,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllSubTasks() {
-        for(int id : subTasks.keySet()) {
+        for (int id : subTasks.keySet()) {
             historyManager.remove(id);
         }
         subTasks.clear();
@@ -108,20 +108,29 @@ public class InMemoryTaskManager implements TaskManager {
     //_____________________________________________
     @Override
     public Task getTaskForId(int id) {
-        historyManager.add(tasks.get(id));
-        return tasks.get(id);
+        if (tasks.get(id) != null) {
+            historyManager.add(tasks.get(id));
+            return tasks.get(id);
+        }
+        return null;
     }
 
     @Override
     public Epic getEpicForId(int id) {
-        historyManager.add(epics.get(id));
-        return epics.get(id);
+        if (epics.get(id) != null) {
+            historyManager.add(epics.get(id));
+            return epics.get(id);
+        }
+        return null;
     }
 
     @Override
     public SubTask getSubTaskForId(int id) {
-        historyManager.add(subTasks.get(id));
-        return subTasks.get(id);
+        if (subTasks.get(id) != null) {
+            historyManager.add(subTasks.get(id));
+            return subTasks.get(id);
+        }
+        return null;
     }
 
     //Обновление задачи
@@ -234,5 +243,4 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHisory() {
         return historyManager.getTasks();
     }
-
 }
