@@ -21,6 +21,6 @@ public class SubTaskTest {
                 1);
 
 
-        Assertions.assertEquals(subTask,subTask1,"Задачи не совпадают");
+        Assertions.assertEquals(subTask, subTask1, "Задачи не совпадают");
     }
 }

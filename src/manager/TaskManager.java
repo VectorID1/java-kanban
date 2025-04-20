@@ -4,17 +4,18 @@ import model.Epic;
 import model.SubTask;
 import model.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface TaskManager {
 
     //Добавление задач
     //___________________________________________
-    void addTask(Task task);
+    void addTask(Task task) throws IOException;
 
-    void addEpic(Epic epic);
+    void addEpic(Epic epic) throws IOException;
 
-    void addSubTask(SubTask subTask);
+    void addSubTask(SubTask subTask) throws IOException;
 
     // Получение списка задач
     //___________________________________________
@@ -26,11 +27,11 @@ public interface TaskManager {
 
     //Удаление всех задач
     //_____________________________________________
-    void removeAllTasks();
+    void removeAllTasks() throws IOException;
 
-    void removeAllEpics();
+    void removeAllEpics() throws IOException;
 
-    void removeAllSubTasks();
+    void removeAllSubTasks() throws IOException;
 
     //Получение по идентификатору
     //_____________________________________________
@@ -42,19 +43,19 @@ public interface TaskManager {
 
     //Обновление задачи
     //__________________________________________________
-    void updateTask(Task task);
+    void updateTask(Task task) throws IOException;
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic) throws IOException;
 
-    void updateSubTask(SubTask subTask);
+    void updateSubTask(SubTask subTask) throws IOException;
 
     //Удаление задачи по ID
     //____________________________________________________
-    void removeTaskForId(int id);
+    void removeTaskForId(int id) throws IOException;
 
-    void removeEpicForId(int id);
+    void removeEpicForId(int id) throws IOException;
 
-    void removeSubTaskForId(int id);
+    void removeSubTaskForId(int id) throws IOException;
 
     //Получение списка всех подзадач model.Epic`a
     //___________________________________________________
@@ -63,7 +64,6 @@ public interface TaskManager {
     //Отображение последних 10 просмотренных задач
     //___________________________________________________
     // List<Task> getHistory();
-
 
 
 }

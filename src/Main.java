@@ -1,3 +1,16 @@
+import manager.FileBackedTaskManager;
+import manager.InMemoryTaskManager;
+import manager.TaskManager;
+import model.Status;
+import model.Task;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static model.TypeTask.TASK;
+
 /*import manager.*;
 import model.Epic;
 import model.Status;
@@ -175,4 +188,21 @@ public class Main {
         System.out.println(taskManager.getHisory());
     }
 }*/
-
+//public class Main {
+//    public static void main(String[] args) throws IOException {
+//        Path path = Paths.get("SaveListTask.txt");
+//        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(path);
+//        fileBackedTaskManager.loadFromFile(path);
+//        //InMemoryTaskManager taskManager = new InMemoryTaskManager();
+//        Task task = new Task(7, TASK, "Новыйтаск", "Новое описание", Status.DONE);
+//        fileBackedTaskManager.addTask(task);
+//        System.out.println(fileBackedTaskManager.getAllTask());
+//
+//        fileBackedTaskManager.removeTaskForId(7);
+//        fileBackedTaskManager.removeAllTasks();
+//        System.out.println(fileBackedTaskManager.getAllTask());
+//        System.out.println(fileBackedTaskManager.getAllSubTask());
+//        System.out.println(fileBackedTaskManager.getAllTask());
+//        System.out.println(fileBackedTaskManager.getAllEpics());
+//    }
+//}
