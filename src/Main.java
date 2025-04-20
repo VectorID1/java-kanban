@@ -1,27 +1,8 @@
-import manager.FileBackedTaskManager;
-import manager.InMemoryTaskManager;
-import manager.TaskManager;
-import model.Status;
-import model.Task;
+//public class Main {
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static model.TypeTask.TASK;
-
-/*import manager.*;
-import model.Epic;
-import model.Status;
-import model.SubTask;
-import model.Task;
-
-public class Main {
-
-    public static void main(String[] args) {
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
-       // HistoryManager historyManager = Managers.getDefaultHistory();
+  //  public static void main(String[] args) {
+    //    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+      //  HistoryManager historyManager = Managers.getDefaultHistory();
 //        //1 Epic____________________________________
 //        Epic epic1 = new Epic("Переезд",
 //                "Переехать в новый город");
@@ -152,57 +133,39 @@ public class Main {
 
 
         //1 Task______________________________________
-        Task task1 = new Task("Поздравить жену с 8 марта",
-                "Купить цветы",
-                Status.NEW);
-        taskManager.addTask(task1);
-        //2 Task_______________________________________
-        Task task2 = new Task("Сходить в магазин",
-                "Купить продукты и не забыть пиво! =)",
-                Status.NEW);
-        taskManager.addTask(task2);
-        //3 Task_______________________________________
-        Task task3 = new Task("Новая 3 задача",
-                "Купить пиво! =)",
-                Status.NEW);
-        taskManager.addTask(task3);
-        //4 Task_______________________________________
-        Task task4 = new Task("Новая 4 задача",
-                "Новое описание 4!",
-                Status.NEW);
-        taskManager.addTask(task4);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(4);
-
-        taskManager.getTaskForId(1);
-
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(1);
-        taskManager.getTaskForId(1);
-
-        taskManager.getTaskForId(1);
-
-
-        System.out.println(taskManager.getHisory());
-    }
-}*/
-//public class Main {
-//    public static void main(String[] args) throws IOException {
-//        Path path = Paths.get("SaveListTask.txt");
-//        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(path);
-//        fileBackedTaskManager.loadFromFile(path);
-//        //InMemoryTaskManager taskManager = new InMemoryTaskManager();
-//        Task task = new Task(7, TASK, "Новыйтаск", "Новое описание", Status.DONE);
-//        fileBackedTaskManager.addTask(task);
-//        System.out.println(fileBackedTaskManager.getAllTask());
+//        Task task1 = new Task("Поздравить жену с 8 марта",
+//                "Купить цветы",
+//                Status.NEW);
+//        taskManager.addTask(task1);
+//        //2 Task_______________________________________
+//        Task task2 = new Task("Сходить в магазин",
+//                "Купить продукты и не забыть пиво! =)",
+//                Status.NEW);
+//        taskManager.addTask(task2);
+//        //3 Task_______________________________________
+//        Task task3 = new Task("Новая 3 задача",
+//                "Купить пиво! =)",
+//                Status.NEW);
+//        taskManager.addTask(task3);
+//        //4 Task_______________________________________
+//        Task task4 = new Task("Новая 4 задача",
+//                "Новое описание 4!",
+//                Status.NEW);
+//        taskManager.addTask(task4);
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(4);
 //
-//        fileBackedTaskManager.removeTaskForId(7);
-//        fileBackedTaskManager.removeAllTasks();
-//        System.out.println(fileBackedTaskManager.getAllTask());
-//        System.out.println(fileBackedTaskManager.getAllSubTask());
-//        System.out.println(fileBackedTaskManager.getAllTask());
-//        System.out.println(fileBackedTaskManager.getAllEpics());
+//        taskManager.getTaskForId(1);
+//
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(3);
+//        taskManager.getTaskForId(1);
+//        taskManager.getTaskForId(1);
+//
+//        taskManager.getTaskForId(1);
+//
+//
+//        System.out.println(taskManager.getHisory());
 //    }
 //}
