@@ -27,6 +27,11 @@ public class SubTask extends Task {
     }
 
     @Override
+    public TypeTask getTypeTask() {
+        return TypeTask.SUBTASK;
+    }
+
+    @Override
     public String toString() {
         return "\n model.SubTask{" +
                 "Номер подзадачи = " + getIdTask() +

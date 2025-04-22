@@ -8,7 +8,6 @@ public class Task {
     private String descriptionTask;
     private Status statusTask;
     private TypeTask typeTask;
-    private int epicId;
 
     public Task(String titleTask, String descriptionTask) {
         this.titleTask = titleTask;
@@ -48,7 +47,7 @@ public class Task {
 
 
     public TypeTask getTypeTask() {
-        return typeTask;
+        return TypeTask.TASK;
     }
 
     public int getIdTask() {

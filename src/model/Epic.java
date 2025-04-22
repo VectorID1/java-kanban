@@ -42,6 +42,11 @@ public class Epic extends Task {
     }
 
     @Override
+    public TypeTask getTypeTask() {
+        return TypeTask.EPIC;
+    }
+
+    @Override
     public String toString() {
         return "\n model.Epic{" +
                 "Номер задачи = " + getIdTask() +

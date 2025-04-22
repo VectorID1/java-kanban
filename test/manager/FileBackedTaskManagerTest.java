@@ -4,12 +4,9 @@ import model.Status;
 import model.Task;
 import model.TypeTask;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
     File tempFile = File.createTempFile("testManager", "csv");
-    FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(tempFile.toPath());
+    FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(tempFile);
 
     public FileBackedTaskManagerTest() throws IOException {
     }
 
 
     @Test
-    public void saveEmptyFile() throws IOException {
+    public void saveEmptyFile() throws ManagerSaveException {
 
         fileBackedTaskManager.save();
         List<Task> newMap = new ArrayList<>();  //Создали пустой лист!
@@ -34,16 +31,16 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void loadEmptyFile() throws IOException {
+    public void loadEmptyFile() {
 
-        fileBackedTaskManager.loadFromFile(tempFile.toPath());
+        FileBackedTaskManager fileBackedTaskManager1 = fileBackedTaskManager.loadFromFile(tempFile);
         List<Task> newMap = new ArrayList<>();
 
-        assertEquals(newMap, fileBackedTaskManager.getAllTask());
+        assertEquals(newMap, fileBackedTaskManager1.getAllTask());
     }
 
     @Test
-    public void save2NewTaskInList() throws IOException {
+    public void save2NewTaskInList() throws ManagerSaveException {
 
         Task task1 = new Task(1, "NameTask1",
                 "DiscriprioinTask1",
@@ -63,10 +60,9 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void load2TaskInFile() throws IOException {
-        Path path = Paths.get("SaveListTask.txt");
-        FileBackedTaskManager fileBackedTaskManager1 = new FileBackedTaskManager(path);
-        fileBackedTaskManager1.loadFromFile(path);
+    public void load2TaskInFile() throws ManagerSaveException, IOException {
+        File path = new File("SaveListTask.csv");
+        FileBackedTaskManager fileBackedTaskManager1 = FileBackedTaskManager.loadFromFile(path);
 
         Task task1 = fileBackedTaskManager1.tasks.get(1);
         Task task2 = fileBackedTaskManager1.tasks.get(2);

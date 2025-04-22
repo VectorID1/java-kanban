@@ -5,7 +5,6 @@ import model.Status;
 import model.SubTask;
 import model.Task;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,20 +29,20 @@ public class InMemoryTaskManager implements TaskManager {
     //Добавление задач
     //___________________________________________
     @Override
-    public void addTask(Task task) throws IOException {
+    public void addTask(Task task) {
         task.setIdTask(generateId());
         tasks.put(task.getIdTask(), task);
     }
 
     @Override
-    public void addEpic(Epic epic) throws IOException {
+    public void addEpic(Epic epic) {
         epic.setIdTask(generateId());
         epics.put(epic.getIdTask(), epic);
         epic.setStatusTask(Status.NEW);
     }
 
     @Override
-    public void addSubTask(SubTask subTask) throws IOException {
+    public void addSubTask(SubTask subTask) {
         Epic epic = epics.get(subTask.getEpicId());
         if (epic == null) {
             return;
@@ -75,7 +74,7 @@ public class InMemoryTaskManager implements TaskManager {
     //Удаление всех задач
     //_____________________________________________
     @Override
-    public void removeAllTasks() throws IOException {
+    public void removeAllTasks() {
         for (int id : tasks.keySet()) {
             historyManager.remove(id);
         }
@@ -83,7 +82,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeAllEpics() throws IOException {
+    public void removeAllEpics() {
         for (int id : subTasks.keySet()) {
             historyManager.remove(id);
         }
@@ -95,7 +94,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeAllSubTasks() throws IOException {
+    public void removeAllSubTasks() {
         for (int id : subTasks.keySet()) {
             historyManager.remove(id);
         }
@@ -138,7 +137,7 @@ public class InMemoryTaskManager implements TaskManager {
     //Обновление задачи
     //__________________________________________________
     @Override
-    public void updateTask(Task task) throws IOException {
+    public void updateTask(Task task) {
         if (tasks.containsKey(task.getIdTask())) {
             tasks.put(task.getIdTask(), task);
         } else {
@@ -147,7 +146,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic) throws IOException {
+    public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getIdTask())) {
             Epic epic1 = epics.get(epic.getIdTask());
             epic1.setDescriptionTask(epic.getDescriptionTask());
@@ -158,7 +157,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) throws IOException {
+    public void updateSubTask(SubTask subTask) {
         if (subTasks.containsKey(subTask.getIdTask())) {
             subTasks.put(subTask.getIdTask(), subTask);
             updateStatusEpic(epics.get(subTask.getEpicId()));
@@ -171,13 +170,13 @@ public class InMemoryTaskManager implements TaskManager {
     //Удаление задачи по ID
     //____________________________________________________
     @Override
-    public void removeTaskForId(int id) throws IOException {
+    public void removeTaskForId(int id) {
         historyManager.remove(id);
         tasks.remove(id);
     }
 
     @Override
-    public void removeEpicForId(int id) throws IOException {
+    public void removeEpicForId(int id) {
         Epic epic = epics.get(id);
         for (int i : epic.getIdSubTasks()) {
             subTasks.remove(i);
@@ -189,7 +188,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeSubTaskForId(int id) throws IOException {
+    public void removeSubTaskForId(int id) {
         SubTask subTask = subTasks.get(id);
         Epic epic = epics.get(subTask.getEpicId());
         epic.removeIdSubTasks(id);

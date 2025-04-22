@@ -1,8 +1,16 @@
-//public class Main {
+import manager.FileBackedTaskManager;
+import model.Status;
+import model.Task;
+import model.TypeTask;
 
-  //  public static void main(String[] args) {
-    //    InMemoryTaskManager taskManager = new InMemoryTaskManager();
-      //  HistoryManager historyManager = Managers.getDefaultHistory();
+import java.io.File;
+
+import static model.TypeTask.TASK;
+
+
+//  public static void main(String[] args) {
+//    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+//  HistoryManager historyManager = Managers.getDefaultHistory();
 //        //1 Epic____________________________________
 //        Epic epic1 = new Epic("Переезд",
 //                "Переехать в новый город");
@@ -132,7 +140,7 @@
 //        System.out.println(historyManager.getTasks());
 
 
-        //1 Task______________________________________
+//1 Task______________________________________
 //        Task task1 = new Task("Поздравить жену с 8 марта",
 //                "Купить цветы",
 //                Status.NEW);

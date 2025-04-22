@@ -1,2 +1,0 @@
-1,TASK,nameTask1,discriprionTask1,NEW,
-2,TASK,nameTask2,discriprionTask2,NEW,

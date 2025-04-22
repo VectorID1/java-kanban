@@ -4,18 +4,17 @@ import model.Epic;
 import model.SubTask;
 import model.Task;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public interface TaskManager {
 
     //Добавление задач
     //___________________________________________
-    void addTask(Task task) throws IOException;
+    void addTask(Task task);
 
-    void addEpic(Epic epic) throws IOException;
+    void addEpic(Epic epic);
 
-    void addSubTask(SubTask subTask) throws IOException;
+    void addSubTask(SubTask subTask);
 
     // Получение списка задач
     //___________________________________________
@@ -27,11 +26,11 @@ public interface TaskManager {
 
     //Удаление всех задач
     //_____________________________________________
-    void removeAllTasks() throws IOException;
+    void removeAllTasks();
 
-    void removeAllEpics() throws IOException;
+    void removeAllEpics();
 
-    void removeAllSubTasks() throws IOException;
+    void removeAllSubTasks();
 
     //Получение по идентификатору
     //_____________________________________________
@@ -43,19 +42,19 @@ public interface TaskManager {
 
     //Обновление задачи
     //__________________________________________________
-    void updateTask(Task task) throws IOException;
+    void updateTask(Task task);
 
-    void updateEpic(Epic epic) throws IOException;
+    void updateEpic(Epic epic);
 
-    void updateSubTask(SubTask subTask) throws IOException;
+    void updateSubTask(SubTask subTask);
 
     //Удаление задачи по ID
     //____________________________________________________
-    void removeTaskForId(int id) throws IOException;
+    void removeTaskForId(int id);
 
-    void removeEpicForId(int id) throws IOException;
+    void removeEpicForId(int id);
 
-    void removeSubTaskForId(int id) throws IOException;
+    void removeSubTaskForId(int id);
 
     //Получение списка всех подзадач model.Epic`a
     //___________________________________________________
