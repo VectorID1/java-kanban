@@ -32,6 +32,22 @@ public class Task {
         this.statusTask = statusTask;
     }
 
+    public Task(int idTask, TypeTask type, String titleTask, String descriptionTask, Status status) {
+        this.idTask = idTask;
+        this.titleTask = titleTask;
+        this.descriptionTask = descriptionTask;
+        this.statusTask = status;
+    }
+
+    public Task() {
+
+    }
+
+
+    public TypeTask getTypeTask() {
+        return TypeTask.TASK;
+    }
+
     public int getIdTask() {
         return idTask;
     }

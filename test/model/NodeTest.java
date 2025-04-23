@@ -16,10 +16,10 @@ class NodeTest {
                 "Test addNewTask",
                 "Test addNewTask description",
                 NEW);
-            Node<Task> newNode1 = new Node<>(null,task,null);
-            Node<Task> newNode2 = new Node<>(null,task,null);
+        Node<Task> newNode1 = new Node<>(null, task, null);
+        Node<Task> newNode2 = new Node<>(null, task, null);
 
-        Assertions.assertEquals(newNode1.getTask(),newNode2.getTask(),"Узлы не равны");
+        Assertions.assertEquals(newNode1.getTask(), newNode2.getTask(), "Узлы не равны");
 
     }
 }

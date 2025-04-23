@@ -1,14 +1,6 @@
-/*import manager.*;
-import model.Epic;
-import model.Status;
-import model.SubTask;
-import model.Task;
-
-public class Main {
-
-    public static void main(String[] args) {
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
-       // HistoryManager historyManager = Managers.getDefaultHistory();
+//  public static void main(String[] args) {
+//    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+//  HistoryManager historyManager = Managers.getDefaultHistory();
 //        //1 Epic____________________________________
 //        Epic epic1 = new Epic("Переезд",
 //                "Переехать в новый город");
@@ -138,41 +130,40 @@ public class Main {
 //        System.out.println(historyManager.getTasks());
 
 
-        //1 Task______________________________________
-        Task task1 = new Task("Поздравить жену с 8 марта",
-                "Купить цветы",
-                Status.NEW);
-        taskManager.addTask(task1);
-        //2 Task_______________________________________
-        Task task2 = new Task("Сходить в магазин",
-                "Купить продукты и не забыть пиво! =)",
-                Status.NEW);
-        taskManager.addTask(task2);
-        //3 Task_______________________________________
-        Task task3 = new Task("Новая 3 задача",
-                "Купить пиво! =)",
-                Status.NEW);
-        taskManager.addTask(task3);
-        //4 Task_______________________________________
-        Task task4 = new Task("Новая 4 задача",
-                "Новое описание 4!",
-                Status.NEW);
-        taskManager.addTask(task4);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(4);
-
-        taskManager.getTaskForId(1);
-
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(4);
-        taskManager.getTaskForId(3);
-        taskManager.getTaskForId(1);
-        taskManager.getTaskForId(1);
-
-        taskManager.getTaskForId(1);
-
-
-        System.out.println(taskManager.getHisory());
-    }
-}*/
-
+//1 Task______________________________________
+//        Task task1 = new Task("Поздравить жену с 8 марта",
+//                "Купить цветы",
+//                Status.NEW);
+//        taskManager.addTask(task1);
+//        //2 Task_______________________________________
+//        Task task2 = new Task("Сходить в магазин",
+//                "Купить продукты и не забыть пиво! =)",
+//                Status.NEW);
+//        taskManager.addTask(task2);
+//        //3 Task_______________________________________
+//        Task task3 = new Task("Новая 3 задача",
+//                "Купить пиво! =)",
+//                Status.NEW);
+//        taskManager.addTask(task3);
+//        //4 Task_______________________________________
+//        Task task4 = new Task("Новая 4 задача",
+//                "Новое описание 4!",
+//                Status.NEW);
+//        taskManager.addTask(task4);
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(4);
+//
+//        taskManager.getTaskForId(1);
+//
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(4);
+//        taskManager.getTaskForId(3);
+//        taskManager.getTaskForId(1);
+//        taskManager.getTaskForId(1);
+//
+//        taskManager.getTaskForId(1);
+//
+//
+//        System.out.println(taskManager.getHisory());
+//    }
+//}

@@ -1,4 +1,5 @@
 package manager;
+
 import model.Epic;
 import model.Status;
 import model.SubTask;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addNewTask() {
+    public void addNewTask() throws IOException {
         Epic epic = new Epic(
                 1,
                 "Test addNewEpic",
@@ -74,7 +76,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void listTaskTest() {
+    void listTaskTest() throws IOException {
         Task task = new Task(1, "Test addNewTask", "Test addNewTask description", NEW);
         Task task1 = new Task(2, "Test addNewTask1", "Test addNewTask1 description", NEW);
         taskManager.addTask(task);
@@ -86,7 +88,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void getSubTaskForEpic() {
+    public void getSubTaskForEpic() throws IOException {
         Epic epic = new Epic(
                 "Test addEpic",
                 "Test addEpic descriprion"
@@ -105,7 +107,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addSubTaskEpicNonExistentId() {
+    public void addSubTaskEpicNonExistentId() throws IOException {
         Epic epic = new Epic(
                 1,
                 "Test addNewEpic",
@@ -123,7 +125,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addTaskPreIdFrom99To1() {
+    public void addTaskPreIdFrom99To1() throws IOException {
         Task task = new Task(
                 99,
                 "TestIdTask",
@@ -135,7 +137,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void newStatusEpic() {
+    public void newStatusEpic() throws IOException {
         Epic epic = new Epic(
                 1,
                 "Test addNewEpic",
@@ -160,7 +162,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void removeEpic() {
+    public void removeEpic() throws IOException {
         Epic epic = new Epic(
                 1,
                 "Test addNewEpic",
