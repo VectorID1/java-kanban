@@ -7,7 +7,6 @@ public class Task {
     private String titleTask;
     private String descriptionTask;
     private Status statusTask;
-    private TypeTask typeTask;
 
     public Task(String titleTask, String descriptionTask) {
         this.titleTask = titleTask;
@@ -38,7 +37,6 @@ public class Task {
         this.titleTask = titleTask;
         this.descriptionTask = descriptionTask;
         this.statusTask = status;
-        this.typeTask = type;
     }
 
     public Task() {

@@ -4,8 +4,7 @@ import java.io.File;
 
 public class Managers {
     public static TaskManager getDefault() {
-        File file = new File("SaveListTask.csv");
-        return new FileBackedTaskManager(file);
+        return new FileBackedTaskManager(new File("SaveListTask.csv"));
     }
 
     public static HistoryManager getDefaultHistory() {
