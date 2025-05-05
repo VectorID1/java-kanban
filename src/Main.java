@@ -130,6 +130,13 @@
 //        System.out.println(historyManager.getTasks());
 
 
+import manager.InMemoryTaskManager;
+import model.Status;
+import model.Task;
+import model.TypeTask;
+
+import java.time.LocalDateTime;
+
 //1 Task______________________________________
 //        Task task1 = new Task("Поздравить жену с 8 марта",
 //                "Купить цветы",
