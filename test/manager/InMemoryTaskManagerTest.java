@@ -1,19 +1,17 @@
 package manager;
 
-import model.Epic;
-import model.Status;
-import model.SubTask;
-import model.Task;
+import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-import static model.Status.DONE;
-import static model.Status.NEW;
+import static model.Status.*;
 
 class InMemoryTaskManagerTest {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
@@ -24,22 +22,10 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addNewTask() throws IOException {
-        Epic epic = new Epic(
-                1,
-                "Test addNewEpic",
-                "Test addNewEpic description");
-        Task task = new Task(
-                2,
-                "Test addNewTask",
-                "Test addNewTask description",
-                NEW);
-        SubTask subTask = new SubTask(
-                3,
-                "Test subTaskName",
-                "Test SubTask description",
-                Status.DONE,
-                1);
+    public void addNewTask() {
+        Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
+        Task task = new Task(2, "Test addNewTask", "Test addNewTask description", NEW);
+        SubTask subTask = new SubTask(3, "Test subTaskName", "Test SubTask description", Status.DONE, 1);
 
         taskManager.addEpic(epic);
         taskManager.addTask(task);
@@ -55,15 +41,11 @@ class InMemoryTaskManagerTest {
 
         Assertions.assertEquals(savedEpic.getTitleTask(), "Test addNewEpic", "Название Epic не совпадает.");
         Assertions.assertEquals(savedTask.getTitleTask(), "Test addNewTask", "Название задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getTitleTask(), "Test subTaskName",
-                "Название подзадачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getTitleTask(), "Test subTaskName", "Название подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getDescriptionTask(), "Test addNewEpic description",
-                "Описание Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getDescriptionTask(), "Test addNewTask description",
-                "Описание задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(), "Test SubTask description",
-                "Описание подзадачи не совпадает.");
+        Assertions.assertEquals(savedEpic.getDescriptionTask(), "Test addNewEpic description", "Описание Epic не совпадает.");
+        Assertions.assertEquals(savedTask.getDescriptionTask(), "Test addNewTask description", "Описание задачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(), "Test SubTask description", "Описание подзадачи не совпадает.");
 
         Assertions.assertEquals(savedEpic.getIdTask(), 1, "id Epic не совпадает");
         Assertions.assertEquals(savedTask.getIdTask(), 2, "id Task не совпадает");
@@ -76,7 +58,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void listTaskTest() throws IOException {
+    void listTaskTest() {
         Task task = new Task(1, "Test addNewTask", "Test addNewTask description", NEW);
         Task task1 = new Task(2, "Test addNewTask1", "Test addNewTask1 description", NEW);
         taskManager.addTask(task);
@@ -88,16 +70,9 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void getSubTaskForEpic() throws IOException {
-        Epic epic = new Epic(
-                "Test addEpic",
-                "Test addEpic descriprion"
-        );
-        SubTask subTask = new SubTask(
-                "Test addSubTask",
-                "Test addSubTask description",
-                Status.NEW,
-                1);
+    public void getSubTaskForEpic() {
+        Epic epic = new Epic("Test addEpic", "Test addEpic descriprion");
+        SubTask subTask = new SubTask("Test addSubTask", "Test addSubTask description", Status.NEW, 1);
         taskManager.addEpic(epic);
         taskManager.addSubTask(subTask);
 
@@ -107,17 +82,9 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addSubTaskEpicNonExistentId() throws IOException {
-        Epic epic = new Epic(
-                1,
-                "Test addNewEpic",
-                "Test addNewEpic description");
-        SubTask subTask = new SubTask(
-                2,
-                "Test subTaskName",
-                "Test SubTask description",
-                Status.DONE,
-                2);
+    public void addSubTaskEpicNonExistentId() {
+        Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
+        SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", Status.DONE, 2);
         taskManager.addEpic(epic);
         taskManager.addSubTask(subTask);
         Assertions.assertNull(taskManager.getSubTaskForId(2));
@@ -125,29 +92,16 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addTaskPreIdFrom99To1() throws IOException {
-        Task task = new Task(
-                99,
-                "TestIdTask",
-                "Test Id Task from 99 to 1",
-                NEW
-        );
+    public void addTaskPreIdFrom99To1() {
+        Task task = new Task(99, "TestIdTask", "Test Id Task from 99 to 1", NEW);
         taskManager.addTask(task);
         Assertions.assertEquals(taskManager.getTaskForId(1), task, "id Task не совпадает в тесте PreId");
     }
 
     @Test
-    public void newStatusEpic() throws IOException {
-        Epic epic = new Epic(
-                1,
-                "Test addNewEpic",
-                "Test addNewEpic description");
-        SubTask subTask = new SubTask(
-                2,
-                "Test subTaskName",
-                "Test SubTask description",
-                NEW,
-                1);
+    public void newStatusEpic() {
+        Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
+        SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", NEW, 1);
         taskManager.addEpic(epic);
         taskManager.addSubTask(subTask);
         Epic newEpic = taskManager.getEpicForId(1);
@@ -162,23 +116,10 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void removeEpic() throws IOException {
-        Epic epic = new Epic(
-                1,
-                "Test addNewEpic",
-                "Test addNewEpic description");
-        SubTask subTask = new SubTask(
-                2,
-                "Test subTaskName",
-                "Test SubTask description",
-                NEW,
-                1);
-        SubTask subTask1 = new SubTask(
-                3,
-                "Test subTaskName",
-                "Test SubTask description",
-                NEW,
-                1);
+    public void removeEpic() {
+        Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
+        SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", NEW, 1);
+        SubTask subTask1 = new SubTask(3, "Test subTaskName", "Test SubTask description", NEW, 1);
         taskManager.addEpic(epic);
         taskManager.addSubTask(subTask);
         taskManager.addSubTask(subTask1);
@@ -190,5 +131,78 @@ class InMemoryTaskManagerTest {
         Assertions.assertNull(taskManager.getEpicForId(1));
         Assertions.assertNull(taskManager.getSubTaskForId(2));
         Assertions.assertNull(taskManager.getSubTaskForId(3));
+    }
+
+    @Test
+    public void statusEpicNew() {
+        Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
+        SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", NEW, 1);
+        SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", NEW, 1);
+        SubTask subTask3 = new SubTask(2, "nameSubtask3", "discriptionSubtask3", NEW, 1);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
+        taskManager.addSubTask(subTask3);
+
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), NEW, "У эпика не задаётся Статус NEW");
+    }
+
+    @Test
+    public void statusEpicDone() {
+        Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
+        SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", DONE, 1);
+        SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", DONE, 1);
+        SubTask subTask3 = new SubTask(2, "nameSubtask3", "discriptionSubtask3", DONE, 1);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
+        taskManager.addSubTask(subTask3);
+
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), DONE, "У эпика не задаётся Статус DONE");
+    }
+
+    @Test
+    public void statusEpicNewAndDone() {
+        Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
+        SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", DONE, 1);
+        SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", NEW, 1);
+        SubTask subTask3 = new SubTask(2, "nameSubtask3", "discriptionSubtask3", NEW, 1);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
+        taskManager.addSubTask(subTask3);
+
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), IN_PROGRESS, "У эпика не задаётся Статус");
+    }
+
+    @Test
+    public void statusEpicInProgress() {
+        Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
+        SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", IN_PROGRESS, 1);
+        SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", IN_PROGRESS, 1);
+        SubTask subTask3 = new SubTask(2, "nameSubtask3", "discriptionSubtask3", IN_PROGRESS, 1);
+        taskManager.addEpic(epic);
+        taskManager.addSubTask(subTask1);
+        taskManager.addSubTask(subTask2);
+        taskManager.addSubTask(subTask3);
+
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), IN_PROGRESS, "У эпика не задаётся Статус");
+    }
+
+    @Test
+    public void intersectionTimeTask() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 05, 03, 20, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1",
+                NEW, startTime1, 150, null);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 05, 03, 21, 00);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2",
+                NEW, startTime2, 100, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Set<Task> newSetTask = new TreeSet<>();
+        newSetTask.add(task1);
+        Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количесто задач");
+        Assertions.assertEquals(newSetTask, taskManager.getPrioritizedTasks(), "Задача с пересекающимся " +
+                "временем доюавилась!");
     }
 }

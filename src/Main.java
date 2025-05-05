@@ -167,3 +167,40 @@
 //        System.out.println(taskManager.getHisory());
 //    }
 //}
+//public class Main {
+//    public static void main(String[] args) {
+//        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+//        LocalDateTime startTime = LocalDateTime.of(2026,10,22,18,45);
+//        LocalDateTime startTime1 = LocalDateTime.of(2025,11,15,18,45);
+//        LocalDateTime startTime2 = LocalDateTime.of(2025,11,15,18,50);
+//        Task task = new Task(1,
+//                TypeTask.TASK,
+//                "nameTask1",
+//                "opicanie1",
+//                Status.NEW,
+//                startTime,
+//                50,
+//                null);
+//        Task task1 = new Task(1,
+//                TypeTask.TASK,
+//                "nameTask2",
+//                "opicanie2",
+//                Status.NEW,
+//                startTime1,
+//                50,
+//                null);
+//        Task task2 = new Task(1,
+//                TypeTask.TASK,
+//                "nameTask2",
+//                "opicanie3",
+//                Status.NEW,
+//                startTime2,
+//                50,
+//                null);
+//        taskManager.addTask(task);
+//        taskManager.addTask(task1);
+//        taskManager.addTask(task2);
+//        System.out.println(taskManager.getPrioritizedTasks());
+//        System.out.println(taskManager.getAllTask());
+//    }
+//}
