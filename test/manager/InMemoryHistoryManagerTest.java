@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static model.Status.NEW;
@@ -63,12 +64,49 @@ class InMemoryHistoryManagerTest {
         historyManager.add(task2);
         historyManager.add(task3);
 
+
         List<Task> tasks = historyManager.getTasks();
         Assertions.assertEquals(3, tasks.size());
 
         historyManager.remove(3);
         List<Task> tasksAfterRemove = historyManager.getTasks();
         Assertions.assertEquals(2, tasksAfterRemove.size(), "Задача не удалилась");
+    }
+
+    @Test
+    public void removeFirstTask() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+
+
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(3, tasks.size());
+
+        historyManager.remove(3);
+        List<Task> tasksAfterRemove = new ArrayList<>();
+        tasksAfterRemove.add(task2);
+        tasksAfterRemove.add(task3);
+        Assertions.assertEquals(2, tasksAfterRemove.size(), "Задача не удалилась");
+        Assertions.assertEquals(tasksAfterRemove, historyManager.getTasks(), "1 задача не удалилась");
+    }
+
+    @Test
+    public void removeLastTask() {
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+
+
+        List<Task> tasks = historyManager.getTasks();
+        Assertions.assertEquals(3, tasks.size());
+
+        historyManager.remove(5);
+        List<Task> tasksAfterRemove = new ArrayList<>();
+        tasksAfterRemove.add(task1);
+        tasksAfterRemove.add(task2);
+        Assertions.assertEquals(2, tasksAfterRemove.size(), "Задача не удалилась");
+        Assertions.assertEquals(tasksAfterRemove, historyManager.getTasks(), "Последняя задача не удалилась");
     }
 
     @Test
