@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static model.Status.*;
 
@@ -191,18 +189,91 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void intersectionTimeTask() {
-        LocalDateTime startTime1 = LocalDateTime.of(2025, 05, 03, 20, 00);
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 5, 3, 20, 10);
         Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1",
                 NEW, startTime1, 150, null);
-        LocalDateTime startTime2 = LocalDateTime.of(2025, 05, 03, 21, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 5, 3, 21, 10);
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2",
                 NEW, startTime2, 100, null);
         taskManager.addTask(task1);
         taskManager.addTask(task2);
-        Set<Task> newSetTask = new TreeSet<>();
-        newSetTask.add(task1);
+        List<Task> newListTask = new ArrayList<>();
+        newListTask.add(task1);
         Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количесто задач");
-        Assertions.assertEquals(newSetTask, taskManager.getPrioritizedTasks(), "Задача с пересекающимся " +
-                "временем доюавилась!");
+        Assertions.assertEquals(newListTask, taskManager.getPrioritizedTasks(), "Задача с пересекающимся " +
+                "временем добавилась!");
+    }
+
+    @Test
+    public void validTestTimeTaskAndSort() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 05, 15, 20, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 06, 15, 20, 00);
+        LocalDateTime startTime3 = LocalDateTime.of(2024, 06, 15, 20, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 99, null);
+        Task task3 = new Task(1, TypeTask.TASK, "nameTask3", "discriptionTask3", NEW, startTime3, 60, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+        List<Task> newListTask = new ArrayList<>();
+        newListTask.add(task3);     //Добавление задач по возрастанию времени начала!
+        newListTask.add(task1);     //Добавление задач по возрастанию времени начала!
+        newListTask.add(task2);     //Добавление задач по возрастанию времени начала!
+        Assertions.assertEquals(3, taskManager.getPrioritizedTasks().size(), "Неверное количесто задач");
+        Assertions.assertEquals(newListTask, taskManager.getPrioritizedTasks(), "Задачи не сортируются по дате!!!");
+    }
+
+    @Test
+    public void endNewTaskIsTimeIntervalOfOldTask() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 05, 15, 20, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 05, 15, 19, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 90, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Assertions.assertNull(taskManager.getTaskForId(2), "Добавилась задача, которая не должна добавиться");
+        Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписана! Неверно!");
+        Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количество задач когда " +
+                "окончание новой находиться на отрезке старой");
+    }
+
+    @Test
+    public void startNewTaskInTimeIntervalOfOldTask() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 20, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 15, 21, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 100, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
+        Assertions.assertEquals(1, taskManager.getAllTask().size());
+        Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количество задач!" +
+                "при пересечении начала новой с отрезком строй задачи!");
+    }
+
+    @Test
+    public void newTaskIntirelyInTimeOldTask() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 20, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 16, 10, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 2000, null);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 100, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
+        Assertions.assertEquals(1, taskManager.getAllTask().size(), "Неверное количество задач. Когда новая" +
+                "полностью находиться во времени старой");
+    }
+
+    @Test
+    public void oldTaskIntirelyInTimeNewTask() {
+        LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 10, 00);
+        LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 14, 10, 00);
+        Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
+        Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 2000, null);
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
+        Assertions.assertEquals(1, taskManager.getAllTask().size(), "Неверное количество задач. Когда старая " +
+                "полностью находиться во времени новой");
     }
 }

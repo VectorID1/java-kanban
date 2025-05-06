@@ -1,10 +1,11 @@
 package model;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Task implements Comparable<Task> {
+public class Task {
     private int idTask;
     private String titleTask;
     private String descriptionTask;
@@ -107,6 +108,10 @@ public class Task implements Comparable<Task> {
         return Optional.ofNullable(startTime);
     }
 
+    public LocalDateTime getStartTimeInFormat() {
+        return this.startTime;
+    }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
@@ -119,9 +124,6 @@ public class Task implements Comparable<Task> {
         this.duration = duration;
     }
 
-    public boolean overlapsTime(Task task) {
-        return this.startTime.isBefore(task.getEndTime().get()) && this.getEndTime().get().isAfter(this.startTime);
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -145,7 +147,7 @@ public class Task implements Comparable<Task> {
                     ", Статус выполнения = " + statusTask +
                     ", Время начала задания = " + getStartTime().get() +
                     ", Время выполнения задания = " + getDuration().toMinutes() + " минут" +
-                    " , Время окончания задания = " + getEndTime().get() +
+                    ", Время окончания задания = " + getEndTime().get() +
                     '}';
         } else {
             return "\n model.Task{" +
@@ -155,10 +157,6 @@ public class Task implements Comparable<Task> {
                     ", Статус выполнения = " + statusTask +
                     '}';
         }
-    }
-
-    public int compareTo(Task other) {
-        return this.startTime.compareTo(other.startTime);
     }
 
 
