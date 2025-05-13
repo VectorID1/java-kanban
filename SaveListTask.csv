@@ -1,4 +1,4 @@
-id,type,name,discribtion,status,epic
-1,TASK,nameTask3,disTask3,NEW,
-2,TASK,nameTask2,disTask2,DONE,
-3,TASK,nameTask3,disTask3,NEW,
+id,type,name,discribtion,status,startTime,durations,endTime,epic
+1,TASK,nameTask1,discriprionTask1,NEW,
+2,TASK,nameTask2,discriprionTask2,NEW,
+3,TASK,nameTaskTime1,discriptionTaskTime1,NEW,2025-10-15T18:45,50,2025-10-15T19:35,

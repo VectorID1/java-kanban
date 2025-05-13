@@ -1,12 +1,18 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Task {
     private int idTask;
     private String titleTask;
     private String descriptionTask;
     private Status statusTask;
+    private long duration;
+    private LocalDateTime startTime;
+
 
     public Task(String titleTask, String descriptionTask) {
         this.titleTask = titleTask;
@@ -43,10 +49,28 @@ public class Task {
 
     }
 
+    public Task(int idTask, TypeTask type, String titleTask, String descriptionTask, Status statusTask, LocalDateTime startTime, long duration, LocalDateTime endTime) {
+        this.idTask = idTask;
+        this.titleTask = titleTask;
+        this.descriptionTask = descriptionTask;
+        this.statusTask = statusTask;
+        this.duration = duration;
+        this.startTime = startTime;
+    }
+
 
     public TypeTask getTypeTask() {
         return TypeTask.TASK;
     }
+
+    public Optional<LocalDateTime> getEndTime() {
+        if (startTime == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(startTime.plus(Duration.ofMinutes(duration)));
+        }
+    }
+
 
     public int getIdTask() {
         return idTask;
@@ -80,6 +104,27 @@ public class Task {
         this.statusTask = statusTask;
     }
 
+    public Optional<LocalDateTime> getStartTime() {
+        return Optional.ofNullable(startTime);
+    }
+
+    public LocalDateTime getStartTimeInFormat() {
+        return this.startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return Duration.ofMinutes(this.duration);
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -94,12 +139,24 @@ public class Task {
 
     @Override
     public String toString() {
-        return "\n model.Task{" +
-                "Номер задачи = " + idTask +
-                ", Название задачи = '" + titleTask + '\'' +
-                ", Описание задачи = '" + descriptionTask + '\'' +
-                ", Статус выполнения = " + statusTask +
-                '}';
+        if (getStartTime().isPresent() && getEndTime().isPresent()) {
+            return "\n model.Task{" +
+                    "Номер задачи = " + idTask +
+                    ", Название задачи = '" + titleTask + '\'' +
+                    ", Описание задачи = '" + descriptionTask + '\'' +
+                    ", Статус выполнения = " + statusTask +
+                    ", Время начала задания = " + getStartTime().get() +
+                    ", Время выполнения задания = " + getDuration().toMinutes() + " минут" +
+                    ", Время окончания задания = " + getEndTime().get() +
+                    '}';
+        } else {
+            return "\n model.Task{" +
+                    "Номер задачи = " + idTask +
+                    ", Название задачи = '" + titleTask + '\'' +
+                    ", Описание задачи = '" + descriptionTask + '\'' +
+                    ", Статус выполнения = " + statusTask +
+                    '}';
+        }
     }
 
 
