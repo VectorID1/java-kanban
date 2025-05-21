@@ -1,59 +1,62 @@
 package model;
 
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
 public class Task {
-    private int idTask;
-    private String titleTask;
-    private String descriptionTask;
-    private Status statusTask;
-    private long duration;
+    private int id;
+    private String name;
+    private TypeTask typeTask;
+    private String description;
+    private Status status;
     private LocalDateTime startTime;
+    private long duration;
 
-
-    public Task(String titleTask, String descriptionTask) {
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public Task(String titleTask, String descriptionTask, Status statusTask) {
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
-        this.statusTask = statusTask;
+    public Task(String name, String description, Status status) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 
-    public Task(int idTask, String titleTask, String descriptionTask) {
-        this.idTask = idTask;
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
+    public Task(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
 
-    public Task(int idTask, String titleTask, String descriptionTask, Status statusTask) {
-        this.idTask = idTask;
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
-        this.statusTask = statusTask;
+    public Task(int id, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 
-    public Task(int idTask, TypeTask type, String titleTask, String descriptionTask, Status status) {
-        this.idTask = idTask;
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
-        this.statusTask = status;
+    public Task(int id, TypeTask typeTask, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.typeTask = getTypeTask();
+        this.description = description;
+        this.status = status;
     }
 
     public Task() {
 
     }
 
-    public Task(int idTask, TypeTask type, String titleTask, String descriptionTask, Status statusTask, LocalDateTime startTime, long duration, LocalDateTime endTime) {
-        this.idTask = idTask;
-        this.titleTask = titleTask;
-        this.descriptionTask = descriptionTask;
-        this.statusTask = statusTask;
+    public Task(int id, TypeTask typeTask, String name, String description, Status status, LocalDateTime startTime, long duration, LocalDateTime endTime) {
+        this.id = id;
+        this.name = name;
+        this.typeTask = getTypeTask();
+        this.description = description;
+        this.status = status;
         this.duration = duration;
         this.startTime = startTime;
     }
@@ -72,36 +75,36 @@ public class Task {
     }
 
 
-    public int getIdTask() {
-        return idTask;
+    public int getId() {
+        return id;
     }
 
-    public void setIdTask(int idTask) {
-        this.idTask = idTask;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTitleTask(String titleTask) {
-        this.titleTask = titleTask;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTitleTask() {
-        return titleTask;
+    public String getName() {
+        return name;
     }
 
-    public String getDescriptionTask() {
-        return descriptionTask;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionTask(String descriptionTask) {
-        this.descriptionTask = descriptionTask;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Status getStatusTask() {
-        return statusTask;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatusTask(Status statusTask) {
-        this.statusTask = statusTask;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Optional<LocalDateTime> getStartTime() {
@@ -129,35 +132,34 @@ public class Task {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return idTask == task.idTask;
+        return id == task.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(idTask);
+        return Objects.hashCode(id);
     }
 
     @Override
     public String toString() {
         if (getStartTime().isPresent() && getEndTime().isPresent()) {
             return "\n model.Task{" +
-                    "Номер задачи = " + idTask +
-                    ", Название задачи = '" + titleTask + '\'' +
-                    ", Описание задачи = '" + descriptionTask + '\'' +
-                    ", Статус выполнения = " + statusTask +
+                    "Номер задачи = " + id +
+                    ", Название задачи = '" + name + '\'' +
+                    ", Описание задачи = '" + description + '\'' +
+                    ", Статус выполнения = " + status +
                     ", Время начала задания = " + getStartTime().get() +
                     ", Время выполнения задания = " + getDuration().toMinutes() + " минут" +
                     ", Время окончания задания = " + getEndTime().get() +
                     '}';
         } else {
             return "\n model.Task{" +
-                    "Номер задачи = " + idTask +
-                    ", Название задачи = '" + titleTask + '\'' +
-                    ", Описание задачи = '" + descriptionTask + '\'' +
-                    ", Статус выполнения = " + statusTask +
+                    "Номер задачи = " + id +
+                    ", Название задачи = '" + name + '\'' +
+                    ", Описание задачи = '" + description + '\'' +
+                    ", Статус выполнения = " + status +
                     '}';
         }
     }
-
 
 }

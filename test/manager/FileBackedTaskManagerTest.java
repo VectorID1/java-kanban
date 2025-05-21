@@ -1,13 +1,13 @@
 package manager;
 
+import exeptions.ManagerSaveException;
+import exeptions.NotFoundExeption;
 import model.Status;
 import model.Task;
 import model.TypeTask;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    public void save2NewTaskInList() throws ManagerSaveException {
+    public void save2NewTaskInList() throws ManagerSaveException, NotFoundExeption {
 
         Task task1 = new Task(1, "NameTask1", "DiscriprioinTask1", Status.NEW);
         Task task2 = new Task(2, "NameTask2", "DiscriprioinTask2", Status.NEW);
@@ -65,7 +65,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void load2TaskInFile() throws ManagerSaveException {
-        File path = new File("SaveListTask.csv");
+        File path = new File("TestSaveListTask.csv");
         FileBackedTaskManager fileBackedTaskManager1 = FileBackedTaskManager.loadFromFile(path);
 
         Task task1 = fileBackedTaskManager1.tasks.get(1);
@@ -85,7 +85,6 @@ public class FileBackedTaskManagerTest {
         Task task = new Task(1, TypeTask.TASK, "nameTaskTime1", "discriptionTaskTime1",
                 Status.NEW, startTime, 50, null);
         fileBackedTaskManager1.addTask(task);
-        System.out.println(fileBackedTaskManager1.getAllTask());
     }
 
 }

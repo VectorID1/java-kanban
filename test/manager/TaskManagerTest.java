@@ -1,5 +1,6 @@
 package manager;
 
+import exeptions.NotFoundExeption;
 import model.Epic;
 import model.Status;
 import model.SubTask;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static model.Status.DONE;
 import static model.Status.NEW;
+import static org.junit.Assert.assertThrows;
 
 class TaskManagerTest {
 
@@ -23,7 +26,7 @@ class TaskManagerTest {
     }
 
     @Test
-    public void addNewTask() {
+    public void addNewTask() throws NotFoundExeption {
         Epic epic = new Epic(
                 1,
                 "Test addNewEpic",
@@ -52,25 +55,25 @@ class TaskManagerTest {
         Assertions.assertNotNull(savedTask, "Задача не найдена.");
         Assertions.assertNotNull(savedTaskSubTask, "Подзадача не найдена.");
 
-        Assertions.assertEquals(savedEpic.getTitleTask(), "Test addNewEpic", "Название Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getTitleTask(), "Test addNewTask", "Название задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getTitleTask(), "Test subTaskName",
+        Assertions.assertEquals(savedEpic.getName(), "Test addNewEpic", "Название Epic не совпадает.");
+        Assertions.assertEquals(savedTask.getName(), "Test addNewTask", "Название задачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getName(), "Test subTaskName",
                 "Название подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getDescriptionTask(), "Test addNewEpic description",
+        Assertions.assertEquals(savedEpic.getDescription(), "Test addNewEpic description",
                 "Описание Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getDescriptionTask(), "Test addNewTask description",
+        Assertions.assertEquals(savedTask.getDescription(), "Test addNewTask description",
                 "Описание задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(), "Test SubTask description",
+        Assertions.assertEquals(savedTaskSubTask.getDescription(), "Test SubTask description",
                 "Описание подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getIdTask(), 1, "id Epic не совпадает");
-        Assertions.assertEquals(savedTask.getIdTask(), 2, "id Task не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getIdTask(), 3, "id SubTask не совпадает");
+        Assertions.assertEquals(savedEpic.getId(), 1, "id Epic не совпадает");
+        Assertions.assertEquals(savedTask.getId(), 2, "id Task не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getId(), 3, "id SubTask не совпадает");
 
-        Assertions.assertEquals(savedEpic.getStatusTask(), DONE, "Статус Epic  не совпадает");
-        Assertions.assertEquals(savedTask.getStatusTask(), NEW, "Статус Task  не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getStatusTask(), DONE, "Статус SubTask  не совпадает");
+        Assertions.assertEquals(savedEpic.getStatus(), DONE, "Статус Epic  не совпадает");
+        Assertions.assertEquals(savedTask.getStatus(), NEW, "Статус Task  не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getStatus(), DONE, "Статус SubTask  не совпадает");
 
     }
 
@@ -105,7 +108,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void getAllSubTaskandGetAllSubtaskForEpicId() {
+    void getAllSubTaskandGetAllSubtaskForEpicId() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(1, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask subTask2 = new SubTask(1, "nameSubTask2", "discriptSubtask2", NEW, 1);
@@ -152,7 +155,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void removeAllSubTasks() {
+    void removeAllSubTasks() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(1, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask subTask2 = new SubTask(1, "nameSubTask2", "discriptSubtask2", NEW, 1);
@@ -168,7 +171,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void getTaskForId() {
+    void getTaskForId() throws NotFoundExeption {
         Task task1 = new Task(1, "nameTask1", "discriptTask1", NEW);
         Task task2 = new Task(1, "nameTask2", "discriptTask2", NEW);
         Task task3 = new Task(1, "nameTask3", "discriptTask3", NEW);
@@ -181,7 +184,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void getEpicForId() {
+    void getEpicForId() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         Epic epic2 = new Epic(1, "nameEpic2", "discriptEpic2");
         Epic epic3 = new Epic(1, "nameEpic3", "discriptEpic3");
@@ -194,7 +197,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void getSubTaskForId() {
+    void getSubTaskForId() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(1, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask subTask2 = new SubTask(1, "nameSubTask2", "discriptSubtask2", NEW, 1);
@@ -209,7 +212,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void updateTask() {
+    void updateTask() throws NotFoundExeption {
         Task task1 = new Task(1, "nameTask1", "discriptTask1", NEW);
         Task updateTask = new Task(1, "newNameTask1", "NewDiscriptTask1", NEW);
         taskManager.addTask(task1);
@@ -218,7 +221,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void updateEpic() {
+    void updateEpic() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         Epic updateEpic = new Epic(1, "NewNameEpic1", "NewDiscriptEpic1");
         taskManager.addEpic(epic1);
@@ -228,7 +231,7 @@ class TaskManagerTest {
     }
 
     @Test
-    void updateSubTaskAndUpdateStatusEpic() {
+    void updateSubTaskAndUpdateStatusEpic() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask updateSubTask = new SubTask(2, "NewNameSubtask1", "NewDiscriptSubtaks1", DONE, 1);
@@ -236,12 +239,12 @@ class TaskManagerTest {
         taskManager.addSubTask(subTask1);
         taskManager.updateSubTask(updateSubTask);
         Assertions.assertEquals(updateSubTask, taskManager.getSubTaskForId(2), "Подзадача не обновилась");
-        Assertions.assertEquals(epic1.getStatusTask(), DONE, "Статус Эпика не обновился при обновлении Подзадачи");
+        Assertions.assertEquals(epic1.getStatus(), DONE, "Статус Эпика не обновился при обновлении Подзадачи");
 
     }
 
     @Test
-    void removeTaskForId() {
+    void removeTaskForId() throws NotFoundExeption {
         Task task1 = new Task(1, "nameTask1", "discriptTask1", NEW);
         Task task2 = new Task(1, "nameTask2", "discriptTask2", NEW);
         Task task3 = new Task(1, "nameTask3", "discriptTask3", NEW);
@@ -252,12 +255,16 @@ class TaskManagerTest {
         ArrayList<Task> taskList = new ArrayList<>();
         taskList.add(task1);
         taskList.add(task3);
-        Assertions.assertNull(taskManager.getTaskForId(2), "Задача не удалилась");
+        NotFoundExeption exception = assertThrows(
+                NotFoundExeption.class,
+                () -> taskManager.getTaskForId(2)
+        );
+        Assertions.assertEquals(exception.getMessage(), "Задачи с ID (2) нет!");
         Assertions.assertEquals(taskList, taskManager.getAllTask(), "Списки не совпадают после удаления 1 задачи");
     }
 
     @Test
-    void removeEpicForId() {
+    void removeEpicForId() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         Epic epic2 = new Epic(1, "nameEpic2", "discriptEpic2");
         Epic epic3 = new Epic(1, "nameEpic3", "discriptEpic3");
@@ -268,12 +275,16 @@ class TaskManagerTest {
         ArrayList<Epic> epicList = new ArrayList<>();
         epicList.add(epic1);
         epicList.add(epic2);
-        Assertions.assertNull(taskManager.getEpicForId(3), "Эпик не удалился");
+        NotFoundExeption exception = assertThrows(
+                NotFoundExeption.class,
+                () -> taskManager.getEpicForId(3)
+        );
+        Assertions.assertEquals(exception.getMessage(), "Эпика с таким ID нет");
         Assertions.assertEquals(epicList, taskManager.getAllEpics(), "Список Эпиков не совпадает после удаления 1 Эпика");
     }
 
     @Test
-    void removeSubTaskForId() {
+    void removeSubTaskForId() throws NotFoundExeption, IOException {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask subTask2 = new SubTask(3, "nameSubTask2", "discriptSubtask2", NEW, 1);
@@ -286,13 +297,17 @@ class TaskManagerTest {
         ArrayList<SubTask> subtaskList = new ArrayList<>();
         subtaskList.add(subTask2);
         subtaskList.add(subTask3);
-        Assertions.assertNull(taskManager.getSubTaskForId(2), "Подзадача осталась после удаления");
+        NotFoundExeption exception = assertThrows(
+                NotFoundExeption.class,
+                () -> taskManager.getSubTaskForId(2)
+        );
+        Assertions.assertEquals(exception.getMessage(), "Подзадачи с таким ID нет");
         Assertions.assertEquals(subtaskList, taskManager.getAllSubTasksForEpic(1), "Подзадача " +
                 "не удалилась и осталась в эпике");
     }
 
     @Test
-    void getAllSubTasksForEpic() {
+    void getAllSubTasksForEpic() throws NotFoundExeption {
         Epic epic1 = new Epic(1, "nameEpic1", "discriptEpic1");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptSubtaks1", NEW, 1);
         SubTask subTask2 = new SubTask(3, "nameSubTask2", "discriptSubtask2", NEW, 1);
