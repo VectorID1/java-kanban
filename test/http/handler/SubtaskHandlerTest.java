@@ -26,7 +26,7 @@ class SubtaskHandlerTest {
     HttpTaskServer taskServer = new HttpTaskServer(manager);
     Gson gson = taskServer.getGson();
 
-    public SubtaskHandlerTest() {
+    public SubtaskHandlerTest() throws IOException {
     }
 
     @BeforeEach

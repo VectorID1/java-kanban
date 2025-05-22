@@ -9,7 +9,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
-public class BaseHttpHandler implements HttpHandler {
+public abstract class BaseHttpHandler implements HttpHandler {
     protected TaskManager taskManager;
     protected Gson gson;
 
@@ -59,7 +59,5 @@ public class BaseHttpHandler implements HttpHandler {
         return exchange.getRequestMethod();
     }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-    }
+
 }

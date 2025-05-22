@@ -11,7 +11,10 @@ public class DurationAdapter extends TypeAdapter<Long> {
 
     @Override
     public void write(JsonWriter out, Long duration) throws IOException {
-        if (duration == null || duration == 0L) {
+        //if (duration == null || duration == 0) {
+        //out.nullValue();
+        //}
+        if (duration == null) {
             out.nullValue();
         } else {
             out.value(duration);
@@ -27,3 +30,4 @@ public class DurationAdapter extends TypeAdapter<Long> {
         return in.nextLong();
     }
 }
+
