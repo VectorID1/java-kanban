@@ -7,26 +7,40 @@ public class Epic extends Task {
     private ArrayList<Integer> idSubTasks;
     LocalDateTime endTime;
 
-    public Epic(String titleTask, String descriptionTask) {
-        super(titleTask, descriptionTask);
+    public Epic(String name, String description) {
+        super(name, description);
         this.idSubTasks = new ArrayList<>();
     }
 
-    public Epic(int idTask, String titleTask, String descriptionTask) {
-        super(idTask, titleTask, descriptionTask);
+    public Epic(int id, String name, String description) {
+        super(id, name, description);
         this.idSubTasks = new ArrayList<>();
     }
 
 
-    public Epic(int idTask, TypeTask type, String titleTask, String descriptionTask, Status status, ArrayList<Integer> idSubTasks) {
-        super(idTask, type, titleTask, descriptionTask, status);
+    public Epic(int id, TypeTask typeTask, String name, String description, Status status, ArrayList<Integer> idSubTasks) {
+        super(id, typeTask, name, description, status);
         this.idSubTasks = idSubTasks;
     }
 
-    public Epic(int idTask, TypeTask type, String titleTask, String descriptionTask, Status statusTask, LocalDateTime startTime, long duration, LocalDateTime endTime, ArrayList<Integer> idSubTasks) {
-        super(idTask, type, titleTask, descriptionTask, statusTask);
+    public Epic(int id, TypeTask typeTask, String name, String description, Status status, LocalDateTime startTime, long duration, LocalDateTime endTime, ArrayList<Integer> idSubTasks) {
+        super(id, typeTask, name, description, status, startTime, duration, endTime);
         this.idSubTasks = idSubTasks;
         endTime = getEndTimeEpic();
+    }
+
+    public Epic(int id, TypeTask typeTask, String name, String description, Status status, LocalDateTime startTime, long duration, LocalDateTime endTime) {
+        super(id, typeTask, name, description, status, startTime, duration, endTime);
+        this.idSubTasks = idSubTasks;
+        endTime = getEndTimeEpic();
+    }
+
+
+    public Epic() {
+    }
+
+    public Epic(int id, TypeTask typeTask, String name, String description, Status status) {
+        super(id, typeTask, name, description, status);
     }
 
     public ArrayList<Integer> getIdSubTasks() {
@@ -66,10 +80,10 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "\n model.Epic{" +
-                "Номер задачи = " + getIdTask() +
-                ", Название задачи = '" + getTitleTask() + '\'' +
-                ", Описание задачи = '" + getDescriptionTask() + '\'' +
-                ", Статус выполнения = " + getStatusTask() +
+                "Номер задачи = " + getId() +
+                ", Название задачи = '" + getName() + '\'' +
+                ", Описание задачи = '" + getDescription() + '\'' +
+                ", Статус выполнения = " + getStatus() +
                 ", idSubTasks = " + idSubTasks +
                 '}';
     }

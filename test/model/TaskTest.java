@@ -30,5 +30,4 @@ class TaskTest {
         Assertions.assertEquals(task, task1, "Задачи не совпадают.");
     }
 
-
 }

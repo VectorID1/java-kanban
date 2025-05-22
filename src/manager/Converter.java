@@ -84,48 +84,41 @@ public class Converter {
         if (task.getStartTime().isPresent() && task.getEndTime().isPresent()) {
             if (task.getTypeTask() == SUBTASK) {
                 SubTask subTask = (SubTask) task;
-                String taskLine =
-                        subTask.getIdTask() + ","
-                                + subTask.getTypeTask() + ","
-                                + subTask.getTitleTask() + ","
-                                + subTask.getDescriptionTask() + ","
-                                + subTask.getStatusTask() + ","
-                                + subTask.getEpicId() + ","
-                                + subTask.getStartTime().map(LocalDateTime::toString).orElse(null) + ","
-                                + subTask.getDuration().toMinutes() + ","
-                                + subTask.getEndTime().map(LocalDateTime::toString).orElse(null) + ",\n";
-                return taskLine;
+
+                return subTask.getId() + ","
+                        + subTask.getTypeTask() + ","
+                        + subTask.getName() + ","
+                        + subTask.getDescription() + ","
+                        + subTask.getStatus() + ","
+                        + subTask.getEpicId() + ","
+                        + subTask.getStartTime().map(LocalDateTime::toString).orElse(null) + ","
+                        + subTask.getDuration().toMinutes() + ","
+                        + subTask.getEndTime().map(LocalDateTime::toString).orElse(null) + ",\n";
             } else {
-                String taskLine =
-                        task.getIdTask() + ","
-                                + task.getTypeTask() + ","
-                                + task.getTitleTask() + ","
-                                + task.getDescriptionTask() + ","
-                                + task.getStatusTask() + ","
-                                + task.getStartTime().map(LocalDateTime::toString).orElse(null) + ","
-                                + task.getDuration().toMinutes() + ","
-                                + task.getEndTime().map(LocalDateTime::toString).orElse(null) + ",\n";
-                return taskLine;
+                return task.getId() + ","
+                        + task.getTypeTask() + ","
+                        + task.getName() + ","
+                        + task.getDescription() + ","
+                        + task.getStatus() + ","
+                        + task.getStartTime().map(LocalDateTime::toString).orElse(null) + ","
+                        + task.getDuration().toMinutes() + ","
+                        + task.getEndTime().map(LocalDateTime::toString).orElse(null) + ",\n";
             }
         } else if (task.getTypeTask() == SUBTASK) {
             SubTask subTask = (SubTask) task;
-            String taskLine =
-                    subTask.getIdTask() + ","
-                            + subTask.getTypeTask() + ","
-                            + subTask.getTitleTask() + ","
-                            + subTask.getDescriptionTask() + ","
-                            + subTask.getStatusTask() + ","
-                            + subTask.getEpicId() + ",\n";
-            return taskLine;
+            return subTask.getId() + ","
+                    + subTask.getTypeTask() + ","
+                    + subTask.getName() + ","
+                    + subTask.getDescription() + ","
+                    + subTask.getStatus() + ","
+                    + subTask.getEpicId() + ",\n";
 
         } else {
-            String taskLine =
-                    task.getIdTask() + ","
-                            + task.getTypeTask() + ","
-                            + task.getTitleTask() + ","
-                            + task.getDescriptionTask() + ","
-                            + task.getStatusTask() + ",\n";
-            return taskLine;
+            return task.getId() + ","
+                    + task.getTypeTask() + ","
+                    + task.getName() + ","
+                    + task.getDescription() + ","
+                    + task.getStatus() + ",\n";
         }
     }
 }

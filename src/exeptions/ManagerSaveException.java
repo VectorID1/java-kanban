@@ -1,8 +1,8 @@
-package manager;
+package exeptions;
 
 
 public class ManagerSaveException extends RuntimeException {
-    ManagerSaveException(String messege) {
+    public ManagerSaveException(String messege) {
         super(messege);
     }
 }

@@ -1,5 +1,7 @@
 package manager;
 
+import exeptions.ManagerSaveException;
+import exeptions.NotFoundExeption;
 import model.*;
 
 import java.io.*;
@@ -25,15 +27,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 try {
                     Task task = fromString(line);
 
-                    if (task.getIdTask() > fileBackedTaskManager.idNumber) {
-                        fileBackedTaskManager.idNumber = task.getIdTask() + 1;
+                    if (task.getId() > fileBackedTaskManager.idNumber) {
+                        fileBackedTaskManager.idNumber = task.getId() + 1;
                     }
                     if (task.getTypeTask() == TASK) {
-                        fileBackedTaskManager.tasks.put(task.getIdTask(), task);
+                        fileBackedTaskManager.tasks.put(task.getId(), task);
                     } else if (task.getTypeTask() == EPIC) {
-                        fileBackedTaskManager.epics.put(task.getIdTask(), (Epic) task);
+                        fileBackedTaskManager.epics.put(task.getId(), (Epic) task);
                     } else if (task.getTypeTask() == SUBTASK) {
-                        fileBackedTaskManager.subTasks.put(task.getIdTask(), (SubTask) task);
+                        fileBackedTaskManager.subTasks.put(task.getId(), (SubTask) task);
                     }
                 } catch (ManagerSaveException e) {
                     System.out.println("Ошибка обработки строки: " + line);
@@ -77,7 +79,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void addSubTask(SubTask subTask) {
+    public void addSubTask(SubTask subTask) throws NotFoundExeption {
         super.addSubTask(subTask);
         save();
     }
@@ -95,7 +97,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeAllSubTasks() {
+    public void removeAllSubTasks() throws NotFoundExeption {
         super.removeAllSubTasks();
         save();
     }
@@ -113,7 +115,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateSubTask(SubTask subTask) {
+    public void updateSubTask(SubTask subTask) throws NotFoundExeption {
         super.updateSubTask(subTask);
         save();
     }
@@ -125,13 +127,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeEpicForId(int id) {
+    public void removeEpicForId(int id) throws NotFoundExeption {
         super.removeEpicForId(id);
         save();
     }
 
     @Override
-    public void removeSubTaskForId(int id) {
+    public void removeSubTaskForId(int id) throws NotFoundExeption, IOException {
         super.removeSubTaskForId(id);
         save();
     }

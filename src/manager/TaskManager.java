@@ -1,10 +1,14 @@
 package manager;
 
+import exeptions.NotFoundExeption;
+import exeptions.TimeConflictExeption;
 import model.Epic;
 import model.SubTask;
 import model.Task;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -14,7 +18,7 @@ public interface TaskManager {
 
     void addEpic(Epic epic);
 
-    void addSubTask(SubTask subTask);
+    void addSubTask(SubTask subTask) throws NotFoundExeption;
 
     // Получение списка задач
     //___________________________________________
@@ -30,38 +34,40 @@ public interface TaskManager {
 
     void removeAllEpics();
 
-    void removeAllSubTasks();
+    void removeAllSubTasks() throws NotFoundExeption;
 
     //Получение по идентификатору
     //_____________________________________________
-    Task getTaskForId(int id);
+    Task getTaskForId(int id) throws NotFoundExeption;
 
-    Epic getEpicForId(int id);
+    Epic getEpicForId(int id) throws NotFoundExeption;
 
-    SubTask getSubTaskForId(int id);
+    SubTask getSubTaskForId(int id) throws NotFoundExeption;
 
     //Обновление задачи
     //__________________________________________________
-    void updateTask(Task task);
+    void updateTask(Task task) throws TimeConflictExeption;
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic) throws TimeConflictExeption;
 
-    void updateSubTask(SubTask subTask);
+    void updateSubTask(SubTask subTask) throws TimeConflictExeption, NotFoundExeption;
 
     //Удаление задачи по ID
     //____________________________________________________
-    void removeTaskForId(int id);
+    void removeTaskForId(int id) throws IOException;
 
-    void removeEpicForId(int id);
+    void removeEpicForId(int id) throws NotFoundExeption;
 
-    void removeSubTaskForId(int id);
+    void removeSubTaskForId(int id) throws IOException, NotFoundExeption;
 
     //Получение списка всех подзадач model.Epic`a
     //___________________________________________________
-    ArrayList<SubTask> getAllSubTasksForEpic(int idEpic);
+    ArrayList<SubTask> getAllSubTasksForEpic(int idEpic) throws NotFoundExeption;
 
-    //Отображение последних 10 просмотренных задач
-    //___________________________________________________
-    // List<Task> getHistory();
+    // Отображение просмотренных задач
+    //__________________________________________________
+    List<Task> getHistory();
 
+
+    List<Task> getPrioritizedTasks();
 }

@@ -1,5 +1,7 @@
 package manager;
 
+import exeptions.NotFoundExeption;
+import exeptions.TimeConflictExeption;
 import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static model.Status.*;
+import static org.junit.Assert.assertThrows;
 
 class InMemoryTaskManagerTest {
     static InMemoryTaskManager taskManager = new InMemoryTaskManager();
@@ -20,7 +23,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addNewTask() {
+    public void addNewTask() throws NotFoundExeption {
         Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
         Task task = new Task(2, "Test addNewTask", "Test addNewTask description", NEW);
         SubTask subTask = new SubTask(3, "Test subTaskName", "Test SubTask description", Status.DONE, 1);
@@ -37,21 +40,21 @@ class InMemoryTaskManagerTest {
         Assertions.assertNotNull(savedTask, "Задача не найдена.");
         Assertions.assertNotNull(savedTaskSubTask, "Подзадача не найдена.");
 
-        Assertions.assertEquals(savedEpic.getTitleTask(), "Test addNewEpic", "Название Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getTitleTask(), "Test addNewTask", "Название задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getTitleTask(), "Test subTaskName", "Название подзадачи не совпадает.");
+        Assertions.assertEquals(savedEpic.getName(), "Test addNewEpic", "Название Epic не совпадает.");
+        Assertions.assertEquals(savedTask.getName(), "Test addNewTask", "Название задачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getName(), "Test subTaskName", "Название подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getDescriptionTask(), "Test addNewEpic description", "Описание Epic не совпадает.");
-        Assertions.assertEquals(savedTask.getDescriptionTask(), "Test addNewTask description", "Описание задачи не совпадает.");
-        Assertions.assertEquals(savedTaskSubTask.getDescriptionTask(), "Test SubTask description", "Описание подзадачи не совпадает.");
+        Assertions.assertEquals(savedEpic.getDescription(), "Test addNewEpic description", "Описание Epic не совпадает.");
+        Assertions.assertEquals(savedTask.getDescription(), "Test addNewTask description", "Описание задачи не совпадает.");
+        Assertions.assertEquals(savedTaskSubTask.getDescription(), "Test SubTask description", "Описание подзадачи не совпадает.");
 
-        Assertions.assertEquals(savedEpic.getIdTask(), 1, "id Epic не совпадает");
-        Assertions.assertEquals(savedTask.getIdTask(), 2, "id Task не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getIdTask(), 3, "id SubTask не совпадает");
+        Assertions.assertEquals(savedEpic.getId(), 1, "id Epic не совпадает");
+        Assertions.assertEquals(savedTask.getId(), 2, "id Task не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getId(), 3, "id SubTask не совпадает");
 
-        Assertions.assertEquals(savedEpic.getStatusTask(), DONE, "Статус Epic  не совпадает");
-        Assertions.assertEquals(savedTask.getStatusTask(), NEW, "Статус Task  не совпадает");
-        Assertions.assertEquals(savedTaskSubTask.getStatusTask(), DONE, "Статус SubTask  не совпадает");
+        Assertions.assertEquals(savedEpic.getStatus(), DONE, "Статус Epic  не совпадает");
+        Assertions.assertEquals(savedTask.getStatus(), NEW, "Статус Task  не совпадает");
+        Assertions.assertEquals(savedTaskSubTask.getStatus(), DONE, "Статус SubTask  не совпадает");
 
     }
 
@@ -68,7 +71,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void getSubTaskForEpic() {
+    public void getSubTaskForEpic() throws NotFoundExeption {
         Epic epic = new Epic("Test addEpic", "Test addEpic descriprion");
         SubTask subTask = new SubTask("Test addSubTask", "Test addSubTask description", Status.NEW, 1);
         taskManager.addEpic(epic);
@@ -80,24 +83,28 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void addSubTaskEpicNonExistentId() {
+    public void addSubTaskEpicNonExistentId() throws NotFoundExeption {
         Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
         SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", Status.DONE, 2);
         taskManager.addEpic(epic);
         taskManager.addSubTask(subTask);
-        Assertions.assertNull(taskManager.getSubTaskForId(2));
+        NotFoundExeption exception = assertThrows(
+                NotFoundExeption.class,
+                () -> taskManager.getSubTaskForId(2)
+        );
+        Assertions.assertEquals(exception.getMessage(), "Подзадачи с таким ID нет");
 
     }
 
     @Test
-    public void addTaskPreIdFrom99To1() {
-        Task task = new Task(99, "TestIdTask", "Test Id Task from 99 to 1", NEW);
+    public void addTaskPreIdFrom99To1() throws NotFoundExeption {
+        Task task = new Task(99, "Testid", "Test Id Task from 99 to 1", NEW);
         taskManager.addTask(task);
         Assertions.assertEquals(taskManager.getTaskForId(1), task, "id Task не совпадает в тесте PreId");
     }
 
     @Test
-    public void newStatusEpic() {
+    public void newStatusEpic() throws NotFoundExeption {
         Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
         SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", NEW, 1);
         taskManager.addEpic(epic);
@@ -105,16 +112,16 @@ class InMemoryTaskManagerTest {
         Epic newEpic = taskManager.getEpicForId(1);
         SubTask newSubTask = taskManager.getSubTaskForId(2);
 
-        Assertions.assertEquals(newEpic.getStatusTask(), NEW);
+        Assertions.assertEquals(newEpic.getStatus(), NEW);
 
-        newSubTask.setStatusTask(DONE);
+        newSubTask.setStatus(DONE);
         taskManager.addSubTask(newSubTask);
 
-        Assertions.assertEquals(newEpic.getStatusTask(), DONE);
+        Assertions.assertEquals(newEpic.getStatus(), DONE);
     }
 
     @Test
-    public void removeEpic() {
+    public void removeEpic() throws NotFoundExeption {
         Epic epic = new Epic(1, "Test addNewEpic", "Test addNewEpic description");
         SubTask subTask = new SubTask(2, "Test subTaskName", "Test SubTask description", NEW, 1);
         SubTask subTask1 = new SubTask(3, "Test subTaskName", "Test SubTask description", NEW, 1);
@@ -125,14 +132,20 @@ class InMemoryTaskManagerTest {
         Assertions.assertNotNull(taskManager.getSubTaskForId(2));
 
         taskManager.removeEpicForId(1);
-
-        Assertions.assertNull(taskManager.getEpicForId(1));
-        Assertions.assertNull(taskManager.getSubTaskForId(2));
-        Assertions.assertNull(taskManager.getSubTaskForId(3));
+        NotFoundExeption exeptionEpic = assertThrows(
+                NotFoundExeption.class, () ->
+                        taskManager.getEpicForId(1)
+        );
+        NotFoundExeption exeptionSubtask = assertThrows(
+                NotFoundExeption.class, () ->
+                        taskManager.getSubTaskForId(2)
+        );
+        Assertions.assertEquals(exeptionEpic.getMessage(), "Эпика с таким ID нет");
+        Assertions.assertEquals(exeptionSubtask.getMessage(), "Подзадачи с таким ID нет");
     }
 
     @Test
-    public void statusEpicNew() {
+    public void statusEpicNew() throws NotFoundExeption {
         Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", NEW, 1);
         SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", NEW, 1);
@@ -142,11 +155,11 @@ class InMemoryTaskManagerTest {
         taskManager.addSubTask(subTask2);
         taskManager.addSubTask(subTask3);
 
-        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), NEW, "У эпика не задаётся Статус NEW");
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatus(), NEW, "У эпика не задаётся Статус NEW");
     }
 
     @Test
-    public void statusEpicDone() {
+    public void statusEpicDone() throws NotFoundExeption {
         Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", DONE, 1);
         SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", DONE, 1);
@@ -156,11 +169,11 @@ class InMemoryTaskManagerTest {
         taskManager.addSubTask(subTask2);
         taskManager.addSubTask(subTask3);
 
-        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), DONE, "У эпика не задаётся Статус DONE");
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatus(), DONE, "У эпика не задаётся Статус DONE");
     }
 
     @Test
-    public void statusEpicNewAndDone() {
+    public void statusEpicNewAndDone() throws NotFoundExeption {
         Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", DONE, 1);
         SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", NEW, 1);
@@ -170,11 +183,11 @@ class InMemoryTaskManagerTest {
         taskManager.addSubTask(subTask2);
         taskManager.addSubTask(subTask3);
 
-        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), IN_PROGRESS, "У эпика не задаётся Статус");
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatus(), IN_PROGRESS, "У эпика не задаётся Статус");
     }
 
     @Test
-    public void statusEpicInProgress() {
+    public void statusEpicInProgress() throws NotFoundExeption {
         Epic epic = new Epic(1, "nameEpic", "discriptionEpic");
         SubTask subTask1 = new SubTask(2, "nameSubtask1", "discriptionSubtask1", IN_PROGRESS, 1);
         SubTask subTask2 = new SubTask(2, "nameSubtask2", "discriptionSubtask2", IN_PROGRESS, 1);
@@ -184,7 +197,7 @@ class InMemoryTaskManagerTest {
         taskManager.addSubTask(subTask2);
         taskManager.addSubTask(subTask3);
 
-        Assertions.assertEquals(taskManager.getEpicForId(1).getStatusTask(), IN_PROGRESS, "У эпика не задаётся Статус");
+        Assertions.assertEquals(taskManager.getEpicForId(1).getStatus(), IN_PROGRESS, "У эпика не задаётся Статус");
     }
 
     @Test
@@ -196,7 +209,11 @@ class InMemoryTaskManagerTest {
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2",
                 NEW, startTime2, 100, null);
         taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        TimeConflictExeption exeption = assertThrows(
+                TimeConflictExeption.class, () ->
+                        taskManager.addTask(task2)
+        );
+
         List<Task> newListTask = new ArrayList<>();
         newListTask.add(task1);
         Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количесто задач");
@@ -224,27 +241,38 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void endNewTaskIsTimeIntervalOfOldTask() {
+    public void endNewTaskIsTimeIntervalOfOldTask() throws NotFoundExeption {
         LocalDateTime startTime1 = LocalDateTime.of(2025, 05, 15, 20, 00);
         LocalDateTime startTime2 = LocalDateTime.of(2025, 05, 15, 19, 00);
         Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 90, null);
+
         taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        Assertions.assertNull(taskManager.getTaskForId(2), "Добавилась задача, которая не должна добавиться");
+        TimeConflictExeption exeption = assertThrows(
+                TimeConflictExeption.class, () ->
+                        taskManager.addTask(task2)
+        );
+        NotFoundExeption exeption1 = assertThrows(
+                NotFoundExeption.class, () ->
+                        taskManager.getTaskForId(2)
+        );
+        Assertions.assertEquals(exeption1.getMessage(), "Задачи с ID (2) нет!");
         Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписана! Неверно!");
         Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количество задач когда " +
                 "окончание новой находиться на отрезке старой");
     }
 
     @Test
-    public void startNewTaskInTimeIntervalOfOldTask() {
+    public void startNewTaskInTimeIntervalOfOldTask() throws NotFoundExeption {
         LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 20, 00);
         LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 15, 21, 00);
         Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 100, null);
         taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        TimeConflictExeption exeption = assertThrows(
+                TimeConflictExeption.class, () ->
+                        taskManager.addTask(task2)
+        );
         Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
         Assertions.assertEquals(1, taskManager.getAllTask().size());
         Assertions.assertEquals(1, taskManager.getPrioritizedTasks().size(), "Неверное количество задач!" +
@@ -252,26 +280,32 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void newTaskIntirelyInTimeOldTask() {
+    public void newTaskIntirelyInTimeOldTask() throws NotFoundExeption {
         LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 20, 00);
         LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 16, 10, 00);
         Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 2000, null);
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 100, null);
         taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        TimeConflictExeption exeption = assertThrows(
+                TimeConflictExeption.class, () ->
+                        taskManager.addTask(task2)
+        );
         Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
         Assertions.assertEquals(1, taskManager.getAllTask().size(), "Неверное количество задач. Когда новая" +
                 "полностью находиться во времени старой");
     }
 
     @Test
-    public void oldTaskIntirelyInTimeNewTask() {
+    public void oldTaskIntirelyInTimeNewTask() throws NotFoundExeption {
         LocalDateTime startTime1 = LocalDateTime.of(2025, 10, 15, 10, 00);
         LocalDateTime startTime2 = LocalDateTime.of(2025, 10, 14, 10, 00);
         Task task1 = new Task(1, TypeTask.TASK, "nameTask1", "discriptionTask1", NEW, startTime1, 100, null);
         Task task2 = new Task(1, TypeTask.TASK, "nameTask2", "discriptionTask2", NEW, startTime2, 2000, null);
         taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        TimeConflictExeption exeption = assertThrows(
+                TimeConflictExeption.class, () ->
+                        taskManager.addTask(task2)
+        );
         Assertions.assertEquals(task1, taskManager.getTaskForId(1), "Задача перезаписано не верно!");
         Assertions.assertEquals(1, taskManager.getAllTask().size(), "Неверное количество задач. Когда старая " +
                 "полностью находиться во времени новой");
